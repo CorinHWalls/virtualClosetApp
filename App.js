@@ -4,12 +4,26 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./Screens/LoginScreen";
 import RegisterScreen from "./Screens/RegisterScreen";
+import AddItemScreen from "./Screens/AddItemScreen";
+import ItemDetailScreen from "./Screens/ItemDetailScreen";
+import LookbookScreen from "./Screens/LookbookScreen";
 import Dashboard from "./Screens/Dashboard";
+import Tabs from "./Components/Navigation/Tabs";
 import { NativeBaseProvider } from "native-base";
 import { UserProvider} from "./Context/UserContext";
 
+
+function HomeTabs(){
+return(
+    
+    <Tabs />
+
+  )
+}
+
 export default function App() {
   const Stack = createNativeStackNavigator();
+  
 
   return (
     <NativeBaseProvider>
@@ -29,12 +43,28 @@ export default function App() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              component={Dashboard}
+              component={HomeTabs}
               name="Dashboard"
-              //  options={{headerShown: false}}
+               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              component={ItemDetailScreen}
+              name="Details"
+               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              component={AddItemScreen}
+              name="AddItem"
+               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              component={LookbookScreen}
+              name="Lookbook"
+               options={{headerShown: false}}
             />
           </Stack.Navigator>
         </NavigationContainer>
+       
       </UserProvider>
 
 

@@ -3,7 +3,6 @@ import {
   Dimensions,
   SafeAreaView,
   Pressable,
-  Alert,
 } from "react-native";
 import React, { useContext, useState } from "react";
 
@@ -13,7 +12,6 @@ import {
   Box,
   FormControl,
   Stack,
-  WarningOutlineIcon,
   Text,
   Button,
   View,
