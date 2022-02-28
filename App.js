@@ -11,6 +11,8 @@ import Dashboard from "./Screens/Dashboard";
 import Tabs from "./Components/Navigation/Tabs";
 import { NativeBaseProvider } from "native-base";
 import { UserProvider} from "./Context/UserContext";
+import stackHeader from "./Components/Navigation/stackHeader"
+
 
 
 function HomeTabs(){
@@ -30,12 +32,19 @@ export default function App() {
 
       <UserProvider>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator
+          headerMode="screen"
+          screenOptions={{
+            header:() => {
+              <stackHeader />
+            }
+          }}
+          >
             <Stack.Screen
               component={LoginScreen}
               name="LoginScreen"
-              options={{ headerShown: false }}
-              headerTitle="Test"
+              // options={{ headerShown: false }}
+              // headerTitle="Test"
             />
             <Stack.Screen
               component={RegisterScreen}
@@ -45,7 +54,7 @@ export default function App() {
             <Stack.Screen
               component={HomeTabs}
               name="Dashboard"
-               options={{headerShown: false}}
+              //  options={{headerShown: false}}
             />
             <Stack.Screen
               component={ItemDetailScreen}

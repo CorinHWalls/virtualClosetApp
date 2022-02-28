@@ -12,4 +12,6 @@ const getCategoryItems = async (category, userId) => {
     
   }
 
+  export {getCategoryItems}
+
   

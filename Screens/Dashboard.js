@@ -7,12 +7,14 @@ import {
   Text,
   View,
   ScrollView,
+  FlatList
 } from "react-native";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../Context/UserContext";
 import AppLoader from "../Components/AppLoader";
 import Card from "../Components/Card";
 import Box from "../Components/Box";
+import getCategoryItems from "../Services/ItemService";
 
 function Dashboard() {
   const { currentUser } = useContext(UserContext);
@@ -26,41 +28,33 @@ function Dashboard() {
     "Accessories",
   ];
 
-  useEffect(() => {
+  const [category, setCategory] = useState(null)
+
+  useEffect( async () => {
+
+    // setCategory(await getCategoryItems("Top", currentUser));
     //handling effects
     setLoginPending(true);
     setTimeout(() => {
       setLoginPending(false);
     }, 3000);
   }, []);
+  // console.log(category);
 
   return (
     <>
-       <View style={styles.container}>
-        {/* <View style={styles.boxContainer}>
-  
-    <Box/>
-    <Box/>
-    <Box/>
-    <Box/>
-    <Box/>
-    <Box/>
+      <SafeAreaView style={styles.container}>
 
-    
+        {/* <ScrollView horizontal={true}>
+      <View>
         
-        </View> */}
+      </View>
+        </ScrollView> */}
+        <FlatList>
 
-          <View style={styles.boxContainer}>
-          {categories.map((category, idx) =>{
-      return(
-        <Pressable
-        key={idx}>
-          <Box title="test"/>
-        </Pressable>
-      )
-    })}
-          </View>
-       </View>
+        </FlatList>
+
+      </SafeAreaView>
 
   
        
@@ -84,6 +78,8 @@ const styles = StyleSheet.create({
   container:{
     flex: 1,
     backgroundColor: "rgb(239,218,215)",
+    paddingTop: 50
+   
   
   },
   boxContainer: {

@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     box: {
-        width: 180,
-        height: 180,
+        width: 150,
+        height: 150,
         
         padding: 10
     },
