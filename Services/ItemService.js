@@ -8,10 +8,22 @@ const getCategoryItems = async (category, userId) => {
     })
 
     const data = await response.json();
+   
     return data;
     
   }
 
-  export {getCategoryItems}
+  const getAllItems = async (userId) => {
+      const response = await fetch(`http://192.168.4.21:5172/Item/getitemsbyuserid/${userId}`, {
+        method: "Get",
+        headers: {
+             "Content-Type" : "application/json"
+        }
+  })
+  const data = await response.json();
+  return data;
+}
+
+  export {getCategoryItems, getAllItems}
 
   

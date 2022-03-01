@@ -11,7 +11,7 @@ import Dashboard from "./Screens/Dashboard";
 import Tabs from "./Components/Navigation/Tabs";
 import { NativeBaseProvider } from "native-base";
 import { UserProvider} from "./Context/UserContext";
-import stackHeader from "./Components/Navigation/stackHeader"
+
 
 
 
@@ -47,14 +47,14 @@ export default function App() {
               // headerTitle="Test"
             />
             <Stack.Screen
-              component={RegisterScreen}
-              name="RegisterScreen"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
               component={HomeTabs}
               name="Dashboard"
               //  options={{headerShown: false}}
+            />
+            <Stack.Screen
+              component={RegisterScreen}
+              name="RegisterScreen"
+              options={{ headerShown: false }}
             />
             <Stack.Screen
               component={ItemDetailScreen}
