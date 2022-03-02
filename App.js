@@ -7,6 +7,8 @@ import RegisterScreen from "./Screens/RegisterScreen";
 import AddItemScreen from "./Screens/AddItemScreen";
 import ItemDetailScreen from "./Screens/ItemDetailScreen";
 import LookbookScreen from "./Screens/LookbookScreen";
+import ProfileScreen from "./Screens/ProfileScreen";
+import FavoriteScreen from "./Screens/FavoriteScreen";
 import Dashboard from "./Screens/Dashboard";
 import Tabs from "./Components/Navigation/Tabs";
 import { NativeBaseProvider } from "native-base";
@@ -58,7 +60,7 @@ export default function App() {
             />
             <Stack.Screen
               component={ItemDetailScreen}
-              name="Details"
+              name="ItemDetails"
                options={{headerShown: false}}
             />
             <Stack.Screen
@@ -69,6 +71,16 @@ export default function App() {
             <Stack.Screen
               component={LookbookScreen}
               name="Lookbook"
+               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              component={ProfileScreen}
+              name="Profile"
+               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              component={FavoriteScreen}
+              name="Favorite"
                options={{headerShown: false}}
             />
           </Stack.Navigator>
