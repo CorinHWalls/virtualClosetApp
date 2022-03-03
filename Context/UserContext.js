@@ -15,11 +15,11 @@ export const UserProvider = ({children}) => {
         const [loginPending, setLoginPending] = useState(false);
 
     ///Purpose: To display items based on category on the Dashboard    
-        const [category, setCategory] = useState(null)
+        const [selectedItemId, setSelectedItemId] = useState(null)
 
         return(
             <UserContext.Provider value={{
-                currentUser, setCurrentUser, loginPending, setLoginPending, category, setCategory
+                currentUser, setCurrentUser, loginPending, setLoginPending, selectedItemId, setSelectedItemId
                 }}>
                 {children}
             </UserContext.Provider>

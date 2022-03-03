@@ -8,15 +8,18 @@ import LookBookScreen from "../../Screens/LookbookScreen";
 import ProfileScreen from "../../Screens/ProfileScreen";
 import FavoriteScreen from "../../Screens/FavoriteScreen";
 import Plus from "../../assets/plus.png";
+import UserContext from "../../Context/UserContext";
+import React, { useContext } from "react";
 
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
-
+  
 
   return (
-
     ///The Menu is the Tab.Navigator
+    <>
+ 
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
@@ -42,7 +45,7 @@ const Tabs = () => {
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="hanger" color={color} size={size} />
           ),
-          // headerShown: false,
+          headerShown: false,
         }}
         name="Dashboard"
         component={Dashboard}
@@ -103,6 +106,7 @@ const Tabs = () => {
       />
       {/* <Tab.Screen name="Settings" component={Dashboard} /> */}
     </Tab.Navigator>
+      </>
   );
 };
 

@@ -15,19 +15,19 @@ import { NativeBaseProvider } from "native-base";
 import { UserProvider} from "./Context/UserContext";
 
 
-
-
-function HomeTabs(){
-return(
-    
-    <Tabs />
-
-  )
-}
-
 export default function App() {
   const Stack = createNativeStackNavigator();
+ 
   
+  function HomeTabs(){
+  return(
+   
+   <Tabs /> 
+      
+    
+  
+    )
+  }
 
   return (
     <NativeBaseProvider>
@@ -48,11 +48,13 @@ export default function App() {
               // options={{ headerShown: false }}
               // headerTitle="Test"
             />
+            
             <Stack.Screen
               component={HomeTabs}
               name="Dashboard"
               //  options={{headerShown: false}}
             />
+
             <Stack.Screen
               component={RegisterScreen}
               name="RegisterScreen"

@@ -2,60 +2,52 @@ import {
   StyleSheet,
   Dimensions,
   SafeAreaView,
-  Pressable,
   Alert,
   Text,
   View,
   ScrollView,
   FlatList,
+  TouchableOpacity
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../Context/UserContext";
 import AppLoader from "../Components/AppLoader";
 import {getCategoryItems, getAllItems} from "../Services/ItemService";
-
 import CategoryBtn from "../Components/CategoryBtn";
+import { isLoading } from "expo-font";
 
-const WIDTH = Dimensions.get('window').width
-function Dashboard() {
-  const { currentUser } = useContext(UserContext);
+function Dashboard({navigation}) {
+  const { currentUser, setSelectedItemId } = useContext(UserContext);
   const { loginPending, setLoginPending } = useContext(UserContext);
   const [category, setCategory] = useState(null);
   const currentUserId = currentUser[0].id
   
   useEffect(async () => {
+    setLoginPending(true);
     const allData = await getAllItems(currentUserId);
     setCategory(allData)
     //handling effects
-    setLoginPending(true);
     setTimeout(() => {
       setLoginPending(false);
     }, 3000);
     
-    console.log(shirtData);
   }, []);
   // console.log(category)
 
-  const Item =({title}) => (
-    <View>
-      <Text>{title}</Text>
-    </View>
-  )
-
-  const renderItem =({item}) => (
-    <Item title={item} />
-  )
-
+  const handleDetailClick = () => {
+      //Pass item.id to detail
+      //navigate user to detail screen
+      navigation.navigate('ItemDetails')
+  }
   
-
   
-
+  
   return (
     <>
+        {loginPending ? <AppLoader /> : null}
+     
       <SafeAreaView style={styles.container}>
      {/* Start of Main Container */}
-
-
 
       {/* Initial ScrollView container */}
         <ScrollView scrollEventToggle={16}>
@@ -90,10 +82,12 @@ function Dashboard() {
         numColumns={2}
         data={category}
         keyExtractor={item => item.id}
-        renderItem={({item, index}) =>{
+        renderItem={({item, index}) => {
+
+          
           return(
-           
-            <View style={styles.itemBox}>
+            <TouchableOpacity onPress={() => {handleDetailClick(), setSelectedItemId(item.id);}} style={styles.itemBox}>
+            <View key={index}>
             <Text>id: {item.id}</Text>
             <Text>UserId: {item.userId}</Text>
             <Text>{item.category}</Text>
@@ -102,19 +96,16 @@ function Dashboard() {
             <Text>Size: {item.size}</Text>
             <Text>{item.season}</Text>
               </View>
+           </TouchableOpacity>
          
           )
         }}
         />
        
         </View>
-    
 
         {/* End of Main Container */}
       </SafeAreaView>
-    
-
-      {loginPending ? <AppLoader /> : null}
     </>
   );
 }
@@ -146,7 +137,7 @@ const styles = StyleSheet.create({
   scrollSection: {
     margin: 10,
     height: 60,
-    marginTop: 20,
+    marginTop: 50,
     borderLeftWidth: 0,
     borderRightWidth: 0,
     borderWidth: 0.2,
