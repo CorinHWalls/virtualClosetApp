@@ -2,7 +2,6 @@ import {
   StyleSheet,
   Dimensions,
   SafeAreaView,
-  Alert,
   Text,
   View,
   ScrollView,
@@ -14,7 +13,6 @@ import UserContext from "../Context/UserContext";
 import AppLoader from "../Components/AppLoader";
 import {getCategoryItems, getAllItems} from "../Services/ItemService";
 import CategoryBtn from "../Components/CategoryBtn";
-import { isLoading } from "expo-font";
 
 function Dashboard({navigation}) {
   const { currentUser, setSelectedItemId } = useContext(UserContext);

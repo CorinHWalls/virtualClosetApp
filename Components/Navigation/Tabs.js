@@ -47,7 +47,7 @@ const Tabs = () => {
           ),
           headerShown: false,
         }}
-        name="Dashboard"
+        name="Tabs"
         component={Dashboard}
       />
       <Tab.Screen

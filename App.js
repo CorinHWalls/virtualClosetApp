@@ -11,12 +11,20 @@ import ProfileScreen from "./Screens/ProfileScreen";
 import FavoriteScreen from "./Screens/FavoriteScreen";
 import Dashboard from "./Screens/Dashboard";
 import Tabs from "./Components/Navigation/Tabs";
-import { NativeBaseProvider } from "native-base";
+import { NativeBaseProvider, extendTheme, } from "native-base";
 import { UserProvider} from "./Context/UserContext";
 
 
 export default function App() {
   const Stack = createNativeStackNavigator();
+  const theme = extendTheme({
+    colors:{
+      primary: {
+        89: '#EFDAD7',
+        90: "#9AD0EC"
+      }
+    }
+  })
  
   
   function HomeTabs(){
@@ -30,7 +38,7 @@ export default function App() {
   }
 
   return (
-    <NativeBaseProvider>
+    <NativeBaseProvider theme={theme}>
 
       <UserProvider>
         <NavigationContainer>
@@ -63,7 +71,7 @@ export default function App() {
             <Stack.Screen
               component={ItemDetailScreen}
               name="ItemDetails"
-               options={{headerShown: false}}
+              //  options={{headerShown: true}}
             />
             <Stack.Screen
               component={AddItemScreen}
