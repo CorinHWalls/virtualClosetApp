@@ -16,6 +16,10 @@ export const UserProvider = ({ children }) => {
   ///Purpose: To display items based on category on the Dashboard
   const [selectedItemId, setSelectedItemId] = useState(null);
 
+  const [newImage, setNewImage] = useState(null);
+
+
+
   return (
     <UserContext.Provider
       value={{
@@ -25,6 +29,8 @@ export const UserProvider = ({ children }) => {
         setLoginPending,
         selectedItemId,
         setSelectedItemId,
+        newImage,
+        setNewImage
       }}
     >
       {children}

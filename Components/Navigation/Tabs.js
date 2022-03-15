@@ -7,9 +7,7 @@ import AddItemScreen from "../../Screens/AddItemScreen";
 import LookBookScreen from "../../Screens/LookbookScreen";
 import ProfileScreen from "../../Screens/ProfileScreen";
 import FavoriteScreen from "../../Screens/FavoriteScreen";
-import Plus from "../../assets/plus.png";
-import UserContext from "../../Context/UserContext";
-import React, { useContext } from "react";
+
 
 const Tab = createBottomTabNavigator();
 
@@ -47,43 +45,44 @@ const Tabs = () => {
           ),
           headerShown: false,
         }}
-        name="Tabs"
+        name="Closet Dashboard"
         component={Dashboard}
       />
       <Tab.Screen
         options={{ tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="cards-heart" color={color} size={size} />
         ),}}
-        name="Favorite"
+        name="Favorite Items"
         component={FavoriteScreen}
       />
       {/* Add icon */}
-      <Tab.Screen
+      {/* <Tab.Screen
         options={{
-          tabBarIcon: ({ focused }) => (
-            <TouchableOpacity>
-                <View style={{
-                    width: 55,
-                    height: 55,
-                    backgroundColor:"#BB6464",
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginBottom: 40,
-                    borderRadius: 50
-                }}>
-            <Image source={Plus} style={{
-                width: 25,
-                height: 25,
-                tintColor: 'white',
-            }} />
-                </View>
-            </TouchableOpacity>
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="view-grid-plus" color={color} size={size} />
+            // <TouchableOpacity onPress={navigation.navigate("AddItem")} >
+            //     <View style={{
+            //         width: 55,
+            //         height: 55,
+            //         backgroundColor:"#BB6464",
+            //         justifyContent: 'center',
+            //         alignItems: 'center',
+            //         marginBottom: 40,
+            //         borderRadius: 50
+            //     }}>
+            // <Image source={Plus} style={{
+            //     width: 25,
+            //     height: 25,
+            //     tintColor: 'white',
+            // }} />
+            //     </View>
+            // </TouchableOpacity>
           ),
-          headerShown: false,
+          headerShown: true,
         }}
-        name={"Action Button"}
+        name={"Add Item"}
         component={AddItemScreen}
-      />
+      /> */}
       <Tab.Screen
         options={{
           tabBarIcon: ({ color, size }) => (

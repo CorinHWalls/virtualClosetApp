@@ -1,10 +1,26 @@
-import { View, Text } from 'react-native'
+import {
+  StyleSheet,
+  Dimensions,
+  SafeAreaView,
+  Text,
+  View,
+  ScrollView,
+  FlatList,
+  TouchableOpacity
+} from "react-native";
 import React from 'react'
 
 export default function ProfileScreen() {
   return (
-    <View>
+    <SafeAreaView>
       <Text>Profile Screen</Text>
-    </View>
+    </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, 
+    backgroundColor: "rgb(239, 218, 215)",
+  }
+})

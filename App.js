@@ -11,11 +11,18 @@ import ProfileScreen from "./Screens/ProfileScreen";
 import FavoriteScreen from "./Screens/FavoriteScreen";
 import Dashboard from "./Screens/Dashboard";
 import Tabs from "./Components/Navigation/Tabs";
+import CameraOpen from "./Components/CameraOpen";
+import DashboardActionBtn from "./Components/DashboardActionBtn";
 import { NativeBaseProvider, extendTheme, } from "native-base";
 import { UserProvider} from "./Context/UserContext";
+import { LogBox } from "react-native"
+
+
 
 
 export default function App() {
+
+  LogBox.ignoreAllLogs(true)
   const Stack = createNativeStackNavigator();
   const theme = extendTheme({
     colors:{
@@ -71,7 +78,7 @@ export default function App() {
             <Stack.Screen
               component={ItemDetailScreen}
               name="ItemDetails"
-              //  options={{headerShown: true}}
+               options={{headerShown: false}}
             />
             <Stack.Screen
               component={AddItemScreen}
@@ -91,6 +98,16 @@ export default function App() {
             <Stack.Screen
               component={FavoriteScreen}
               name="Favorite"
+               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              component={CameraOpen}
+              name="Camera"
+               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              component={DashboardActionBtn}
+              name="Gallery"
                options={{headerShown: false}}
             />
           </Stack.Navigator>
