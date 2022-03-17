@@ -28,7 +28,7 @@ export default function AddItemScreen({ navigation }) {
 
 
   const handleSubmit = async () => {
-    await addItem(currentUserId, color, size, brand, season, category, newImage, favorite  )
+    await addItem(currentUserId, color, size, brand, season, category, newImage, favorite )
 
     navigation.navigate("Dashboard");
     
@@ -43,7 +43,7 @@ export default function AddItemScreen({ navigation }) {
         alignItems="center"
       >
         {/* Picture */}
-
+      
         <Box borderWidth="2" w="175" h="175" justifyContent="center" alignItems="center">
           {/* <Pressable onPress={() =>{ navigation.navigate("Camera"), setNewImage(null)}}>
           <MaterialCommunityIcons name="camera" color={color} size={100} />

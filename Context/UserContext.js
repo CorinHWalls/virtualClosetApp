@@ -18,7 +18,8 @@ export const UserProvider = ({ children }) => {
 
   const [newImage, setNewImage] = useState(null);
 
-
+  const [isSelected, setIsSelected] = useState([]);
+  const [selecting, setSelecting] = useState(false);
 
   return (
     <UserContext.Provider
@@ -30,7 +31,11 @@ export const UserProvider = ({ children }) => {
         selectedItemId,
         setSelectedItemId,
         newImage,
-        setNewImage
+        setNewImage,
+        isSelected,
+        setIsSelected,
+        selecting, 
+        setSelecting
       }}
     >
       {children}

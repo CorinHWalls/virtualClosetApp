@@ -1,11 +1,12 @@
 
-import { StyleSheet, View } from "react-native";
+import { StyleSheet} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./Screens/LoginScreen";
 import RegisterScreen from "./Screens/RegisterScreen";
 import AddItemScreen from "./Screens/AddItemScreen";
 import ItemDetailScreen from "./Screens/ItemDetailScreen";
+import CreateLookScreen from "./Screens/CreateLookScreen";
 import LookbookScreen from "./Screens/LookbookScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import FavoriteScreen from "./Screens/FavoriteScreen";
@@ -13,6 +14,7 @@ import Dashboard from "./Screens/Dashboard";
 import Tabs from "./Components/Navigation/Tabs";
 import CameraOpen from "./Components/CameraOpen";
 import DashboardActionBtn from "./Components/DashboardActionBtn";
+import LookBookActionBtn from "./Components/LookBookActionBtn";
 import { NativeBaseProvider, extendTheme, } from "native-base";
 import { UserProvider} from "./Context/UserContext";
 import { LogBox } from "react-native"
@@ -99,6 +101,7 @@ export default function App() {
               component={FavoriteScreen}
               name="Favorite"
                options={{headerShown: false}}
+               title=''
             />
             <Stack.Screen
               component={CameraOpen}
@@ -108,6 +111,17 @@ export default function App() {
             <Stack.Screen
               component={DashboardActionBtn}
               name="Gallery"
+               options={{headerShown: false}}
+            />
+
+            <Stack.Screen
+              component={LookBookActionBtn}
+              name="LookBookBtn"
+               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              component={CreateLookScreen}
+              name="Select"
                options={{headerShown: false}}
             />
           </Stack.Navigator>

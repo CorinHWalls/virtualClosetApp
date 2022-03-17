@@ -7,8 +7,11 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
-  Image
+  Alert
 } from "react-native";
+import { Image } from "native-base";
+
+
 import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../Context/UserContext";
 import AppLoader from "../Components/AppLoader";
@@ -20,9 +23,10 @@ import DashboardActionBtn from "../Components/DashboardActionBtn";
 function Dashboard({ navigation }) {
   const { currentUser, setSelectedItemId, loginPending, setLoginPending } =
     useContext(UserContext);
-  // const { loginPending, setLoginPending } = useContext(UserContext);
   const [category, setCategory] = useState(null);
   const currentUserId = currentUser[0].id;
+
+ 
 
 
   useEffect(async () => {
@@ -34,12 +38,12 @@ function Dashboard({ navigation }) {
     setTimeout(() => {
       setLoginPending(false);
     }, 3000);
+
+    
   }, []);
-  // console.log(category)
+
 
   const handleDetailClick = () => {
-    //Pass item.id to detail
-    //navigate user to detail screen
     navigation.navigate("ItemDetails");
   };
 
@@ -51,8 +55,8 @@ function Dashboard({ navigation }) {
 
       <SafeAreaView style={styles.container}>
         {/* Start of Main Container */}
-
-        {/* Initial ScrollView container */}
+  
+        
         <ScrollView scrollEventToggle={16}>
           <View style={styles.scrollSection}>
             <ScrollView
@@ -129,48 +133,45 @@ function Dashboard({ navigation }) {
           </View>
         </ScrollView>
 
-        {/* FlatList of Items displayed */}
+<View style={styles.itemContainer}>
+<FlatList
+  // style={{flex:1}}
+  horizontal={false}
+  numColumns={2}
+  data={category}
+  keyExtractor={(item) => item.id}
+  renderItem={({ item, index }) => {
+   
+    return (
+      <>
+      
+      <TouchableOpacity
+        onPress={() => {
+          handleDetailClick(), setSelectedItemId(item.id);
+        }}
+        style={styles.itemBox}
+      >
+        <View key={index}>
 
-        <View style={styles.itemContainer}>
-          <FlatList
-            // style={{flex:1}}
-            horizontal={false}
-            numColumns={2}
-            data={category}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item, index }) => {
-             
-              return (
-                <>
-                
-                <TouchableOpacity
-                  onPress={() => {
-                    handleDetailClick(), setSelectedItemId(item.id);
-                  }}
-                  style={styles.itemBox}
-                >
-                  <View key={index}>
-
-                    <Text>id: {item.id}</Text>
-                    <Text>UserId: {item.userId}</Text>
-                    <Text>{item.category}</Text>
-                    <Text>{item.color}</Text>
-                    <Text>Size: {item.size}</Text>
-                    <Text>{item.season}</Text>
-                    <Text>Brand: {item.brand}</Text>
-                    <Image source={{uri: item.image}} styles={styles.imageContainer} alt="image" />
-                  </View>
-                    
-                </TouchableOpacity>
-                </>
-              );
-            }}
-          />
-          
-
-          <DashboardActionBtn />
-         
+          <Text>id: {item.id}</Text>
+          <Text>UserId: {item.userId}</Text>
+          <Text>{item.category}</Text>
+          <Text>{item.color}</Text>
+          <Text>Size: {item.size}</Text>
+          <Text>{item.season}</Text>
+          <Text>Brand: {item.brand}</Text>
+          <Image source={item.image} styles={styles.itemBox} alt="image" />
         </View>
+          
+      </TouchableOpacity>
+      </>
+    );
+  }}
+/>
+
+<DashboardActionBtn />
+</View>
+ 
 
         {/* End of Main Container */}
       </SafeAreaView>

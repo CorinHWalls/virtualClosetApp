@@ -22,8 +22,8 @@ export default function FavoriteScreen({navigation}) {
   useEffect(async () => {
     //Load Favorites
     setFavData(await getFavorites(currentUserId, favorite))
-    favData
-  }, [favData]);
+    
+  }, []);
 
   const handleDetailClick = () => {
     //Pass item.id to detail
