@@ -6,14 +6,19 @@ import {
   View,
   ScrollView,
   FlatList,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
 import { Avatar, Icon } from "native-base";
-import React from "react";
+import React, { useContext} from "react";
 import profileImg from "../assets/Profile_Avatar.png";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import UserContext from "../Context/UserContext";
+
 
 export default function ProfileScreen() {
+
+  const { currentUser } =
+  useContext(UserContext)
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>

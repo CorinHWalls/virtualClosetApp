@@ -16,14 +16,43 @@ export const UserProvider = ({ children }) => {
   ///Purpose: To display items based on category on the Dashboard
   const [selectedItemId, setSelectedItemId] = useState(null);
 
+  //For image picker and Camera
   const [newImage, setNewImage] = useState(null);
 
-  const [isSelected, setIsSelected] = useState([]);
+  //For selecting Items for Lookbook
+  const [isSelected, setIsSelected] = useState({});
   const [selecting, setSelecting] = useState(false);
+
+  //Item properties
+  const[brand, setBrand] = useState();
+  const [image, setImage] = useState();
+  const [color, setColor] = useState();
+  const [size, setSize] = useState();
+  const [season, setSeason] = useState();
+  const [category, setCategory] = useState();
+  const [favorite, setFavorite] = useState();
+  const [selected, setSelected] = useState();
+
 
   return (
     <UserContext.Provider
       value={{
+        brand,
+        setBrand,
+        image,
+        setImage,
+        color,
+        setColor,
+        size,
+        setSize,
+        season,
+        setSeason,
+        category,
+        setCategory,
+        favorite,
+        setFavorite,
+        selected,
+        setSelected,
         currentUser,
         setCurrentUser,
         loginPending,

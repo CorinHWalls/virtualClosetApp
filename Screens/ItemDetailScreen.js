@@ -1,5 +1,5 @@
 // import { View, Text } from 'react-native'
-import React, { useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../Context/UserContext";
 import { Input, Box, FormControl, Text, Select } from "native-base";
 import { StyleSheet, Image } from "react-native";
@@ -7,42 +7,54 @@ import { getItemById, updateItemById } from "../Services/ItemService";
 import AppBar from "../Components/Navigation/AppBar.js";
 
 export default function ItemDetailScreen() {
-  const { currentUser, selectedItemId, newImage, setNewImage } =
-    useContext(UserContext);
+  const {
+    currentUser,
+    selectedItemId,
+    brand,
+    setBrand,
+    image,
+    setImage,
+    color,
+    setColor,
+    size,
+    setSize,
+    season,
+    setSeason,
+    category,
+    setCategory,
+    favorite,
+    setFavorite,
+    selected,
+    setSelected,
+  } = useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const [formData, setFormData] = useState({});
   const [disableFields, setDisableFields] = useState(true);
-  const [color, setColor] = useState();
-  const [size, setSize] = useState();
-  const [brand, setBrand] = useState();
-  const [season, setSeason] = useState();
-  const [category, setCategory] = useState();
-  const [image, setImage] = useState();
-  const [favorite, setFavorite] = useState(false);
+  // const [color, setColor] = useState();
+  // const [size, setSize] = useState();
+  // const [brand, setBrand] = useState();
+  // const [season, setSeason] = useState();
+  // const [category, setCategory] = useState();
+  // const [image, setImage] = useState();
+  // const [favorite, setFavorite] = useState(false);
   const [editStatus, setEditStatus] = useState(false);
-
 
   useEffect(async () => {
     let data = await getItemById(selectedItemId, currentUserId);
-    setBrand(data.brand)
-    setImage(data.image)
-    setColor(data.color)
-    setSize(data.size)
-    setSeason(data.season)
-    setCategory(data.category)
-    setFavorite(data.favorite)
+    setBrand(data.brand);
+    setImage(data.image);
+    setColor(data.color);
+    setSize(data.size);
+    setSeason(data.season);
+    setCategory(data.category);
+    setFavorite(data.favorite);
 
     setFormData(await getItemById(selectedItemId, currentUserId));
     disableFields;
-
- 
   }, [disableFields]);
 
-
   const saveChanges = async () => {
-
-    await updateItemById(
-      {
+    await updateItemById({
       currentUserId,
       selectedItemId,
       color,
@@ -51,17 +63,20 @@ export default function ItemDetailScreen() {
       season,
       category,
       image,
-      favorite
-      }
-    );
-   
-
+      favorite,
+    });
   };
 
   const handleEdit = () => {
-    setDisableFields(false);
-  };
 
+    if(disableFields){
+      setDisableFields(false);
+    }
+    else{
+      setDisableFields(true)
+    }
+
+  };
 
   return (
     <>
@@ -82,7 +97,6 @@ export default function ItemDetailScreen() {
           justifyContent="center"
           alignItems="center"
         >
-        
           {/* Picture */}
           <Box mt="5" borderWidth="1" w="200" h="200">
             <Image
@@ -183,7 +197,7 @@ export default function ItemDetailScreen() {
           </Box>
 
           {/* Input Fields */}
-          <Box w="70%" mt="15 "  alignItems="center">
+          <Box w="70%" mt="15 " alignItems="center">
             <Box w="75%">
               <FormControl mb="2">
                 <FormControl.Label
@@ -196,7 +210,11 @@ export default function ItemDetailScreen() {
                 >
                   Brand
                 </FormControl.Label>
-                <Input value={brand}  placeholder={formData.brand} onChangeText={(value) => setBrand(value)} />
+                <Input
+                  value={brand}
+                  placeholder={formData.brand}
+                  onChangeText={(value) => setBrand(value)}
+                />
               </FormControl>
               <FormControl mb="2">
                 <FormControl.Label
@@ -209,7 +227,11 @@ export default function ItemDetailScreen() {
                 >
                   Color
                 </FormControl.Label>
-                <Input value={color} placeholder={formData.color} onChangeText={(value) => setColor(value)} />
+                <Input
+                  value={color}
+                  placeholder={formData.color}
+                  onChangeText={(value) => setColor(value)}
+                />
               </FormControl>
 
               <FormControl mb="5">
@@ -223,14 +245,18 @@ export default function ItemDetailScreen() {
                 >
                   Size
                 </FormControl.Label>
-                <Input value={size} placeholder={formData.size} onChangeText={(value) => setSize(value)} />
+                <Input
+                  value={size}
+                  placeholder={formData.size}
+                  onChangeText={(value) => setSize(value)}
+                />
               </FormControl>
 
               <Text>Category</Text>
               <Select
                 selectedValue={formData.category}
                 minWidth="200"
-                accessibilityLabel={'Choose Category'}
+                accessibilityLabel={"Choose Category"}
                 placeholder={formData.category}
                 _selectedItem={{
                   bg: "primary.90",

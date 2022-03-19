@@ -24,7 +24,7 @@ function RegisterScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
+  const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   //Error checking
   const [usernameError, setUsernameError] = useState();
@@ -63,7 +63,7 @@ function RegisterScreen({ navigation }) {
 
       //Will create user and returns true or false depending if username exists
       //If username exists returns false because it did not create the account
-      const didCreate = await CreateAcc(username, password, firstName, lastName);
+      const didCreate = await CreateAcc(username, password, name);
   
     //Check to see if password matches confirmed password
   
@@ -152,7 +152,7 @@ function RegisterScreen({ navigation }) {
                         <FormControl.Label>First Name</FormControl.Label>
                         <Input
                           type="text"
-                          placeholder="First Name"
+                          placeholder="Display Name"
                           variant="rounded"
                           onChangeText={setFirstName}
                         />

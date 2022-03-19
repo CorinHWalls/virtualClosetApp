@@ -14,16 +14,15 @@ import {getFavorites} from "../Services/ItemService";
 
 export default function FavoriteScreen({navigation}) {
   const { currentUser, setSelectedItemId, loginPending, setLoginPending } = useContext(UserContext);
-  // const { loginPending, setLoginPending } = useContext(UserContext);
-  const [favorite, setFavorite] = useState(true);
+  
   const [favData, setFavData] = useState();
   const currentUserId = currentUser[0].id;
 
   useEffect(async () => {
     //Load Favorites
-    setFavData(await getFavorites(currentUserId, favorite))
+    setFavData(await getFavorites(currentUserId, true))
     
-  }, []);
+  }, [favData]);
 
   const handleDetailClick = () => {
     //Pass item.id to detail
@@ -57,8 +56,8 @@ export default function FavoriteScreen({navigation}) {
                     <Text>{item.color}</Text>
                     <Text>Size: {item.size}</Text>
                     <Text>{item.season}</Text>
-                    <Image source={{uri: item.image}} />
                   </View>
+                    <Image source={item.image} />
                 </TouchableOpacity>
               );
             }}

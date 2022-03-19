@@ -1,3 +1,20 @@
+// const LoginAuth = async (username, password) => {
+
+//     const response = await fetch("https://virtualclosetapi.azurewebsites.net/User/Login", { 
+//         method: "POST",
+//         headers: {
+//              "Content-Type" : "application/json"
+//         },
+//         body: JSON.stringify({
+//             "Username": username ,
+//             "Password": password
+//         })
+//     })
+
+//     const data = await response.json();
+//     return data;
+    
+//   }
 const LoginAuth = async (username, password) => {
 
     const response = await fetch("http://192.168.4.21:5172/User/Login", { 
@@ -16,6 +33,21 @@ const LoginAuth = async (username, password) => {
     
   }
 
+//   const getUser = async (username) => {
+//     const response = await fetch("https://virtualclosetapi.azurewebsites.net/User/getCurrentUser", { 
+//         method: "Post",
+//         headers: {
+//              "Content-Type" : "application/json"
+//         },
+//         body: JSON.stringify({
+//             "Username": username,
+//         })
+//     })
+
+//     const data = await response.json();
+  
+//     return data;
+//   }
   const getUser = async (username) => {
     const response = await fetch("http://192.168.4.21:5172/User/getCurrentUser", { 
         method: "Post",
@@ -32,7 +64,27 @@ const LoginAuth = async (username, password) => {
     return data;
   }
 
-  const CreateAcc = async (username, password, firstName, lastName) => {
+//   const CreateAcc = async (username, password, name) => {
+
+//     const response = await fetch("https://virtualclosetapi.azurewebsites.net/User/AddUser", { 
+//         method: "POST",
+//         headers: {
+//              "Content-Type" : "application/json"
+//         },
+//         body: JSON.stringify({
+//             "Id": 0,
+//             "Username": username ,
+//             "Password": password,
+//             "Name": name
+//         })
+//     })
+
+//     const data = await response.json();
+//     return data;
+    
+//   }
+  
+  const CreateAcc = async (username, password, name) => {
 
     const response = await fetch("http://192.168.4.21:5172/User/AddUser", { 
         method: "POST",
@@ -43,8 +95,7 @@ const LoginAuth = async (username, password) => {
             "Id": 0,
             "Username": username ,
             "Password": password,
-            "FirstName": firstName,
-            "LastName": lastName
+            "Name": name
         })
     })
 
