@@ -11,6 +11,7 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../Context/UserContext";
 import {getFavorites} from "../Services/ItemService";
+import MainBar from "../Components/Navigation/MainBar"
 
 export default function FavoriteScreen({navigation}) {
   const { currentUser, setSelectedItemId, loginPending, setLoginPending } = useContext(UserContext);
@@ -33,6 +34,7 @@ export default function FavoriteScreen({navigation}) {
   return (
     <>
       <SafeAreaView style={styles.container}>
+        <MainBar page="Favorite Items" />
         <View style={styles.itemContainer}>
           <FlatList
             // style={{flex:1}}

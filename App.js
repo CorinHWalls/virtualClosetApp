@@ -10,6 +10,7 @@ import CreateLookScreen from "./Screens/CreateLookScreen";
 import LookbookScreen from "./Screens/LookbookScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import FavoriteScreen from "./Screens/FavoriteScreen";
+import CreateOutfitScreen from "./Screens/CreateOutfitScreen";
 import Dashboard from "./Screens/Dashboard";
 import Tabs from "./Components/Navigation/Tabs";
 import CameraOpen from "./Components/CameraOpen";
@@ -120,7 +121,7 @@ export default function App() {
                options={{headerShown: false}}
             />
             <Stack.Screen
-              component={CreateLookScreen}
+              component={CreateOutfitScreen}
               name="Select"
                options={{headerShown: false}}
             />

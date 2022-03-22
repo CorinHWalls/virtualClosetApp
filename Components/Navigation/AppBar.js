@@ -4,6 +4,7 @@ import { Box, HStack, StatusBar, Icon, IconButton } from "native-base";
 import UserContext from "../../Context/UserContext";
 import React, { useContext, useEffect, useState } from "react";
 import { getItemById, updateItemById } from "../../Services/ItemService";
+import { useNavigation } from "@react-navigation/native";
 
 export default function AppBar({
   page,
@@ -33,6 +34,7 @@ export default function AppBar({
     setSelected,
   } = useContext(UserContext);
   const currentUserId = currentUser[0].id;
+  const navigation = useNavigation();
 
 
   const saveChanges = async () => {
@@ -51,14 +53,14 @@ export default function AppBar({
     if (!favorite) {
       
       setFavorite(true);
-      console.log("set true")
+      
     } else {
     
       setFavorite(false);
-      console.log("set false")
+      
       
     }
-    // setTimeout(() => {save()}, 1000)
+  
 
   };
 
@@ -89,10 +91,14 @@ export default function AppBar({
           <Text color="white" fontSize="9" fontWeight="bold">
             {page}
           </Text>
+         <IconButton
+         onPress={() => navigation.navigate("Dashboard")}
+         />
         </HStack>
+        
 
         {editStatus ? 
-        <HStack ml="230">
+        <HStack ml="0">
 
         {favorite ? (
             <IconButton

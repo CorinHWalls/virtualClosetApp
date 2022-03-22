@@ -20,16 +20,16 @@ import {
 } from "../Services/ItemService";
 
 export default function CreateLookScreen({ navigation }) {
-  const { currentUser, selectedItemId, setSelectedItemId } = useContext(UserContext);
+  const { currentUser, selectedItemId, setSelectedItemId } =
+    useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const [category, setCategory] = useState();
   const [selectedItems, setSelectedItems] = useState([]);
   const [selected, setSelected] = useState(false);
-  const [outfitName, setOutfitName] = useState()
-  const [displayData, setDisplayData] = useState({})
+  const [outfitName, setOutfitName] = useState();
+  const [displayData, setDisplayData] = useState({});
 
   /////working on this
- 
 
   useEffect(async () => {
     const categoryData = await getAllItems(currentUserId);
@@ -48,42 +48,35 @@ export default function CreateLookScreen({ navigation }) {
 
   //Handling selecting items
   const handleLongPress = async (item) => {
-  
-
- 
     //handles deselecting:
     if (selectedItems.includes(item.id)) {
-      setSelected(getSelected(item))
+      setSelected(getSelected(item));
       //Filter out the selected item and replace selectedItems with new list
       const newItemList = selectedItems.filter((itemId) => itemId !== item.id);
       setSelectedItems(newItemList);
     } else {
       //handles selecting items
-      setSelected(getSelected(item))
+      setSelected(getSelected(item));
       setSelectedItems([...selectedItems, item.id]);
-      
     }
     // selectedItems.forEach(function(item){
     //    setDisplayData(await getItemById(item))
     // })
-    console.log(displayData)
+    console.log(displayData);
   };
 
   const addToArr = () => {
-
-    let data = [{
-      id: 0,
-      userId: currentUserId,
-      itemId: selectedItemId,
-      OufitName: outfitName
-      
-    }];
-    
-  }
+    let data = [
+      {
+        id: 0,
+        userId: currentUserId,
+        itemId: selectedItemId,
+        OufitName: outfitName,
+      },
+    ];
+  };
   //  check and see if item exists in arr, return bool
   const getSelected = (item) => selectedItems.includes(item.id);
-
- 
 
   return (
     <>
@@ -186,8 +179,7 @@ export default function CreateLookScreen({ navigation }) {
                     }}
                     style={styles.itemBox}
                     // selected={}
-                    onLongPress={() => 
-                      handleLongPress(item)}
+                    onLongPress={() => handleLongPress(item)}
                     key={index}
                   >
                     <View>

@@ -56,7 +56,9 @@ const Tabs = () => {
       <Tab.Screen
         options={{ tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="cards-heart" color={color} size={size} />
-        ),}}
+        ),
+        headerShown: false,
+      }}
         name="Favorite Items"
         component={FavoriteScreen}
       />

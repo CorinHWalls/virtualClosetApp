@@ -95,7 +95,7 @@ function RegisterScreen({ navigation }) {
           {/*///////////// Brand view ///////////// */}
           <View
             backgroundColor="#9AD0EC"
-            style={{ height: Dimensions.get("window").height / 3 }}
+            style={{ height: Dimensions.get("window").height / 4 }}
           >
             <View>
               <Text style={styles.brandViewText}>Register</Text>
@@ -154,7 +154,7 @@ function RegisterScreen({ navigation }) {
                           type="text"
                           placeholder="Display Name"
                           variant="rounded"
-                          onChangeText={setFirstName}
+                          onChangeText={setName}
                         />
                         <Text style={{ color: "red", marginLeft: 20 }}>
                           {firstnameError}

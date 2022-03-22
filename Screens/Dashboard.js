@@ -18,6 +18,7 @@ import AppLoader from "../Components/AppLoader";
 import { getCategoryItems, getAllItems } from "../Services/ItemService";
 import CategoryBtn from "../Components/CategoryBtn";
 import DashboardActionBtn from "../Components/DashboardActionBtn";
+import MainBar from "../Components/Navigation/MainBar"
 
 
 function Dashboard({ navigation }) {
@@ -51,9 +52,11 @@ function Dashboard({ navigation }) {
 
   return (
     <>
+    
       {loginPending ? <AppLoader /> : null}
 
       <SafeAreaView style={styles.container}>
+        <MainBar page="Item Dashboard" />
         {/* Start of Main Container */}
   
         
@@ -184,6 +187,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgb(239,218,215)",
     // paddingTop: 50,
+   
   },
   itemContainer: {
     flex: 50,
