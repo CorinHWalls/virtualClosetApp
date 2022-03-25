@@ -12,6 +12,8 @@ import {
 import LookBookActionBtn from "../Components/LookBookActionBtn";
 import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../Context/UserContext";
+import MainBar from "../Components/Navigation/MainBar"
+const {height, width} = Dimensions.get('window')
 
 
 
@@ -35,8 +37,10 @@ export default function LookbookScreen() {
    <SafeAreaView style={styles.container}>
      {/* Start of main container */}
 
+     
+     <MainBar page="Outfits" />
      <View style={styles.itemContainer}>
-          <FlatList
+          {/* <FlatList
             // style={{flex:1}}
             horizontal={false}
             numColumns={2}
@@ -69,7 +73,7 @@ export default function LookbookScreen() {
                 </>
               );
             }}
-          />
+          /> */}
           
 
           <LookBookActionBtn />
@@ -84,7 +88,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "rgb(239,218,215)",
-    // paddingTop: 50,
+    width: width,
+    height: height
   },
   itemContainer: {
     flex: 50,

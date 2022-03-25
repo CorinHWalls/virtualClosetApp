@@ -121,7 +121,7 @@ export default function App() {
                options={{headerShown: false}}
             />
             <Stack.Screen
-              component={CreateOutfitScreen}
+              component={CreateLookScreen}
               name="Select"
                options={{headerShown: false}}
             />

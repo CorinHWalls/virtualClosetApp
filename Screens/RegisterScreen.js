@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { CreateAcc } from "../Services/LoginService";
 import Confirmation from "../Components/Confirmation"
+import KeyboardAvoidingWrapper from "../Components/KeyboardAvoidingWrapper";
 
 import {
   NativeBaseProvider,
@@ -19,6 +20,7 @@ import {
   Button,
   View,
 } from "native-base";
+const {height, width} = Dimensions.get('window')
 
 function RegisterScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -88,18 +90,21 @@ function RegisterScreen({ navigation }) {
     <>
       <NativeBaseProvider>
         {/*///////////// Container Start /////////////*/}
+        <KeyboardAvoidingWrapper>
+
+        
         <SafeAreaView
           style={{ flex: 1, backgroundColor: "#ffffff" }}
           //   showsVerticalScrollIndicator={false}
         >
           {/*///////////// Brand view ///////////// */}
           <View
-            backgroundColor="#9AD0EC"
+            backgroundColor="#EFDAD7"
             style={{ height: Dimensions.get("window").height / 4 }}
           >
-            <View>
+            {/* <View>
               <Text style={styles.brandViewText}>Register</Text>
-            </View>
+            </View> */}
           </View>
 
           {/*///////////// Bottom View /////////////*/}
@@ -215,6 +220,7 @@ function RegisterScreen({ navigation }) {
             </View>
           </View>
         </SafeAreaView>
+        </KeyboardAvoidingWrapper>
         {/*///////////// Container End ///////////// */}
       </NativeBaseProvider>
       {userCreated ? <Confirmation /> : null}
@@ -223,6 +229,12 @@ function RegisterScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  container:{
+     flex: 1,
+     backgroundColor: "rgb(239,218,215)",
+     height: height,
+     
+  },
   brandView: {
     flex: 1,
     // marginTop:30,

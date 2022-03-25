@@ -78,8 +78,15 @@ export default function ItemDetailScreen() {
 
   };
 
+  const handleDelete = () => {
+    console.log("item deleted")
+  }
+
   return (
     <>
+    
+
+    
       <AppBar
         page={"Details"}
         editStatus={editStatus}
@@ -88,6 +95,7 @@ export default function ItemDetailScreen() {
         save={saveChanges}
         favorite={favorite}
         setFavorite={setFavorite}
+        delete={handleDelete}
       />
 
       {disableFields ? (
@@ -97,10 +105,11 @@ export default function ItemDetailScreen() {
           justifyContent="center"
           alignItems="center"
         >
+          
           {/* Picture */}
-          <Box mt="5" borderWidth="1" w="200" h="200">
+          <Box mt="5" borderWidth="1" w="50%" h="30%">
             <Image
-              source={{ uri: formData.image }}
+              source={{ uri: image }}
               alt="Image"
               style={styles.imageContainer}
             />
@@ -188,9 +197,9 @@ export default function ItemDetailScreen() {
           alignItems="center"
         >
           {/* Picture */}
-          <Box mt="5" borderWidth="1" w="200" h="200">
+          <Box mt="5" borderWidth="1" w="50%" h="30%">
             <Image
-              source={{ uri: formData.image }}
+              source={{ uri: image }}
               alt="Image"
               style={styles.imageContainer}
             />
@@ -299,13 +308,14 @@ export default function ItemDetailScreen() {
           </Box>
         </Box>
       )}
+      
     </>
   );
 }
 
 const styles = StyleSheet.create({
   imageContainer: {
-    height: 200,
-    width: 200,
+    height: "100%",
+    width: "100%",
   },
 });

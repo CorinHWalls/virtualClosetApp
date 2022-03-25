@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Box, HStack, StatusBar, Icon, IconButton } from "native-base";
+import { Box, HStack, StatusBar, Icon, IconButton, Popover, Button } from "native-base";
 import UserContext from "../../Context/UserContext";
 import React, { useContext, useEffect, useState } from "react";
 import { getItemById, updateItemById } from "../../Services/ItemService";
@@ -35,19 +35,20 @@ export default function AppBar({
   } = useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const navigation = useNavigation();
+  const [position, setPosition] = useState("auto")
 
 
-  const saveChanges = async () => {
-    await updateItemById({currentUserId,
-      selectedItemId,
-      color,
-      size,
-      brand,
-      season,
-      category,
-      image,
-      favorite});
-  }
+  // const saveChanges = async () => {
+  //   await updateItemById({currentUserId,
+  //     selectedItemId,
+  //     color,
+  //     size,
+  //     brand,
+  //     season,
+  //     category,
+  //     image,
+  //     favorite});
+  // }
  
   const favoriteToggle = () => {
     if (!favorite) {
@@ -129,17 +130,47 @@ export default function AppBar({
           </HStack>
           : null}
         <HStack>
-          
-          <IconButton
-            icon={
-              <Icon
-              as={MaterialCommunityIcons}
-              name="delete"
-              size="sm"
-              color="white"
+        <IconButton
+              icon={
+                <Icon
+                as={MaterialCommunityIcons}
+                name="delete"
+                size="md"
+                color="white"
+                />
+              }
               />
-            }
-            />
+          {/* <Popover 
+          placement={position === "auto" ? undefined : position}
+          trigger={triggerProps => {
+            return <IconButton
+                {...triggerProps}
+              icon={
+                <Icon
+                as={MaterialCommunityIcons}
+                name="delete"
+                size="md"
+                color="white"
+                />
+              }
+              />
+          
+          }}>
+            <Popover.Content>
+              <Popover.Arrow />
+              <Popover.CloseButton />
+              <Popover.Header>Delete Item?</Popover.Header>
+              <Popover.Body>
+                This will permanently delete the item currently selected. This action cannot be reversed.
+              </Popover.Body>
+              <Popover.Footer justifyContent="flex-end">
+                <Button.Group space={2}>
+                  <Button colorScheme="coolGray" variant="ghost">Cancel</Button>
+                  <Button colorScheme="danger" onPress>Delete</Button>
+                </Button.Group>
+              </Popover.Footer>
+            </Popover.Content>
+            </Popover> */}
           {editStatus ? (
             <IconButton
             onPress={() => editToggle()}
@@ -147,7 +178,7 @@ export default function AppBar({
               <Icon
               as={MaterialCommunityIcons}
               name="check"
-              size="sm"
+              size="md"
               color="white"
               />
             }
@@ -159,7 +190,7 @@ export default function AppBar({
                 <Icon
                   as={MaterialCommunityIcons}
                   name="pencil"
-                  size="sm"
+                  size="md"
                   color="white"
                 />
               }

@@ -10,20 +10,20 @@ import {
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../Context/UserContext";
-import {getFavorites} from "../Services/ItemService";
-import MainBar from "../Components/Navigation/MainBar"
+import { getFavorites } from "../Services/ItemService";
+import MainBar from "../Components/Navigation/MainBar";
 
-export default function FavoriteScreen({navigation}) {
-  const { currentUser, setSelectedItemId, loginPending, setLoginPending } = useContext(UserContext);
-  
+export default function FavoriteScreen({ navigation }) {
+  const { currentUser, setSelectedItemId, loginPending, setLoginPending } =
+    useContext(UserContext);
+
   const [favData, setFavData] = useState();
   const currentUserId = currentUser[0].id;
 
   useEffect(async () => {
     //Load Favorites
-    setFavData(await getFavorites(currentUserId, true))
-    
-  }, [favData]);
+    setFavData(await getFavorites(currentUserId, true));
+  }, []);
 
   const handleDetailClick = () => {
     //Pass item.id to detail
@@ -50,16 +50,12 @@ export default function FavoriteScreen({navigation}) {
                   }}
                   style={styles.itemBox}
                 >
-                  <View key={index}>
-                    <Text>id: {item.id}</Text>
-                    <Text>UserId: {item.userId}</Text>
-                    <Text>{item.category}</Text>
-                    <Text>{item.brand}</Text>
-                    <Text>{item.color}</Text>
-                    <Text>Size: {item.size}</Text>
-                    <Text>{item.season}</Text>
-                  </View>
-                    <Image source={item.image} />
+                  <Image
+                    key={index}
+                    source={{ uri: item.image }}
+                    style={styles.imageContainer}
+                    alt="image"
+                  />
                 </TouchableOpacity>
               );
             }}
@@ -74,7 +70,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "rgb(239, 218, 215)",
-  }, itemContainer: {
+  },
+  itemContainer: {
     flex: 50,
     height: Dimensions.get("window").height * 2,
     // flexDirection: "column",
@@ -107,5 +104,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     height: 22,
     color: "white",
+  },
+  imageContainer: {
+    height: "100%",
+    width: "100%",
   },
 });

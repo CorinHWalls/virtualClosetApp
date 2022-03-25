@@ -18,18 +18,22 @@ import {
   getAllItems,
   getItemById,
 } from "../Services/ItemService";
+import {addOutfit} from "../Services/OutfitService"
+import MainBar from "../Components/Navigation/MainBar"
 
 export default function CreateLookScreen({ navigation }) {
   const { currentUser, selectedItemId, setSelectedItemId } =
     useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const [category, setCategory] = useState();
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [selected, setSelected] = useState(false);
   const [outfitName, setOutfitName] = useState();
   const [displayData, setDisplayData] = useState({});
 
-  /////working on this
+  // Multi-Select
+  const [selected, setSelected] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  
 
   useEffect(async () => {
     const categoryData = await getAllItems(currentUserId);
@@ -39,51 +43,47 @@ export default function CreateLookScreen({ navigation }) {
   }, []);
 
   const handleOnPress = (item) => {
-    //check if there is anything selected if so continue selecting instead of navigating to details
-    if (selectedItems.length) {
-      return handleLongPress(item);
-    }
-    navigation.navigate("ItemDetails");
+selectItems({item})
   };
 
-  //Handling selecting items
-  const handleLongPress = async (item) => {
-    //handles deselecting:
-    if (selectedItems.includes(item.id)) {
-      setSelected(getSelected(item));
-      //Filter out the selected item and replace selectedItems with new list
-      const newItemList = selectedItems.filter((itemId) => itemId !== item.id);
-      setSelectedItems(newItemList);
-    } else {
-      //handles selecting items
-      setSelected(getSelected(item));
-      setSelectedItems([...selectedItems, item.id]);
-    }
-    // selectedItems.forEach(function(item){
-    //    setDisplayData(await getItemById(item))
-    // })
-    console.log(displayData);
-  };
 
-  const addToArr = () => {
-    let data = [
-      {
-        id: 0,
-        userId: currentUserId,
-        itemId: selectedItemId,
-        OufitName: outfitName,
-      },
-    ];
-  };
-  //  check and see if item exists in arr, return bool
-  const getSelected = (item) => selectedItems.includes(item.id);
+  const selectItems = (item) => {
+    if (selectedItems.includes(item)){
+      const newSelectedItems= selectedItems.filter((item) => item !== item);
+      setSelectedItems(newSelectedItems);
+    }
+    setSelectedItems([...selectedItems, item]);
+  }
+  
+  console.log(selectedItems);
+
+
+
+  const handleSubmit = () => {
+
+selectedItems.forEach(item => {
+  // console.log(item);
+  addOutfit(item)
+
+})
+  
+  }
+
+
+
+  //  check and see if item exists in arr, return bool / NOT IN USE
+  // const getSelected = (item) => selectedItems.includes(item.id);
 
   return (
     <>
       <SafeAreaView style={styles.container}>
         {/* Window to view selected items */}
 
-        <Box mt="5" borderWidth="1" w="100%" h="55%"></Box>
+        <MainBar page="Create Outfit" />
+
+        <Box mt="5" borderWidth="1" w="100%" h="40%">
+          <Button onPress={handleSubmit}>Submit</Button>
+        </Box>
         {/* Filter */}
         <ScrollView scrollEventToggle={16}>
           <View style={styles.scrollSection}>
@@ -175,27 +175,20 @@ export default function CreateLookScreen({ navigation }) {
                 <>
                   <TouchableOpacity
                     onPress={() => {
-                      handleOnPress(item), setSelectedItemId(item.id);
+                      handleOnPress(item.brand)
                     }}
                     style={styles.itemBox}
-                    // selected={}
-                    onLongPress={() => handleLongPress(item)}
                     key={index}
+                    selected={selected}
                   >
-                    <View>
-                      <Text>id: {item.id}</Text>
-                      <Text>UserId: {item.userId}</Text>
-                      <Text>{item.category}</Text>
-                      <Text>{item.color}</Text>
-                      <Text>Size: {item.size}</Text>
-                      <Text>{item.season}</Text>
-                      <Text>Brand: {item.brand}</Text>
-                      {/* <Image
+              
+                
+                      <Image
                         source={{ uri: item.image }}
-                        styles={styles.imageContainer}
+                        style={styles.imageContainer}
                         alt="image"
-                      /> */}
-                    </View>
+                      />
+                  
                     {selected ? <View style={styles.overlay} /> : null}
                   </TouchableOpacity>
                 </>
@@ -248,6 +241,10 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "rgba(0,0,0,0.4)",
   },
+  imageContainer:{
+    height: "100%",
+    width: "100%"
+  }
 });
 
 // const styles = StyleSheet.create({

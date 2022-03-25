@@ -17,6 +17,7 @@ import { getCategoryItems, getAllItems } from "../Services/ItemService";
 import MainBar from "../Components/Navigation/MainBar"
 
 
+
 export default function ProfileScreen() {
 
   const { currentUser } =
@@ -50,11 +51,11 @@ export default function ProfileScreen() {
      setOther(await getCategoryItems("Other", currentUserId))
      setSwimWear(await getCategoryItems("SwimWear", currentUserId))
      setIsLoaded(true);
-     console.log(tops)
   }, [])
   
 
   return (
+    
     <SafeAreaView style={styles.container}>
       <MainBar page="User Profile" />
 

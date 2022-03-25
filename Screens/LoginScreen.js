@@ -18,6 +18,8 @@ import {
 } from "native-base";
 import { LoginAuth, getUser } from "../Services/LoginService";
 import UserContext from "../Context/UserContext";
+import KeyboardAvoidingWrapper from "../Components/KeyboardAvoidingWrapper";
+// import {useFonts, Caveat } from '@expo-google-fonts/Caveat'
 
 function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -29,6 +31,10 @@ function LoginScreen({ navigation }) {
   const  [usernameError, setUsernameError ] = useState();
   const  [passwordError, setPasswordError ] = useState();
   const  [userfoundError, setUserFoundError] = useState();
+
+  // useFonts({
+  //   Caveat_
+  // })
  
 
   const handleLogin = async () => {
@@ -73,13 +79,16 @@ function LoginScreen({ navigation }) {
     <>
       <NativeBaseProvider>
         {/*///////////// Container Start /////////////*/}
+        <KeyboardAvoidingWrapper>
+
+        
         <SafeAreaView
           style={{ flex: 1, backgroundColor: "#ffffff" }}
           //   showsVerticalScrollIndicator={false}
         >
           {/*///////////// Brand view ///////////// */}
           <View
-            backgroundColor="#9AD0EC"
+            backgroundColor="#EFDAD7"
             style={{ height: Dimensions.get("window").height / 1.9 }}
           >
             <View>
@@ -166,6 +175,7 @@ function LoginScreen({ navigation }) {
             </View>
           </View>
         </SafeAreaView>
+        </KeyboardAvoidingWrapper>
         {/*///////////// Container End ///////////// */}
       </NativeBaseProvider>
     </>

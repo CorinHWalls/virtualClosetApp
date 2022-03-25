@@ -25,6 +25,7 @@
 //   const data = await response.json();
 //   return data;
 // };
+
 const addOutfit = async (
   currentUserId,
   itemId,

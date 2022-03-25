@@ -7,9 +7,10 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
-  Alert
+  Alert,
+  Image
 } from "react-native";
-import { Image } from "native-base";
+// import { Image } from "native-base";
 
 
 import React, { useContext, useEffect, useState } from "react";
@@ -19,6 +20,8 @@ import { getCategoryItems, getAllItems } from "../Services/ItemService";
 import CategoryBtn from "../Components/CategoryBtn";
 import DashboardActionBtn from "../Components/DashboardActionBtn";
 import MainBar from "../Components/Navigation/MainBar"
+const {height, width} = Dimensions.get('window')
+
 
 
 function Dashboard({ navigation }) {
@@ -26,6 +29,7 @@ function Dashboard({ navigation }) {
     useContext(UserContext);
   const [category, setCategory] = useState(null);
   const currentUserId = currentUser[0].id;
+  const [isLoaded, setIsLoaded] = useState(false);
 
  
 
@@ -38,6 +42,7 @@ function Dashboard({ navigation }) {
     //handling effects
     setTimeout(() => {
       setLoginPending(false);
+      setIsLoaded(true)
     }, 3000);
 
     
@@ -154,17 +159,11 @@ function Dashboard({ navigation }) {
         }}
         style={styles.itemBox}
       >
-        <View key={index}>
-
-          <Text>id: {item.id}</Text>
-          <Text>UserId: {item.userId}</Text>
-          <Text>{item.category}</Text>
-          <Text>{item.color}</Text>
-          <Text>Size: {item.size}</Text>
-          <Text>{item.season}</Text>
-          <Text>Brand: {item.brand}</Text>
-          <Image source={item.image} styles={styles.itemBox} alt="image" />
-        </View>
+     
+          
+          
+        <Image key={index} source={{uri: item.image}} style={styles.imageContainer} alt="image" /> 
+         
           
       </TouchableOpacity>
       </>
@@ -186,7 +185,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "rgb(239,218,215)",
-    // paddingTop: 50,
+    height: height,
+    width: width
    
   },
   itemContainer: {
@@ -224,8 +224,8 @@ const styles = StyleSheet.create({
     color: "white",
   },
   imageContainer: {
-    height: 150,
-    width: 150
+    height: "100%",
+    width: "100%"
     
   }
 });

@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, Dimensions, TouchableOpacity } from 'react-native';
+import {Icon, IconButton } from "native-base";
 import UserContext from "../Context/UserContext";
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
+const {width: winWidth, height: winHeight} = Dimensions.get('window')
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function CameraOpen({navigation}) {
 
@@ -43,11 +46,27 @@ export default function CameraOpen({navigation}) {
       <View style={styles.container}>
 
         <View style={styles.cameraContainer}>
-      <Camera ref={ref => setCamera(ref)} style={styles.fixedRatio} type={type} ratio={'1:1'} />
+      <Camera ref={ref => setCamera(ref)} style={styles.preview} type={type} ratio={'1:1'} />
 
         </View>
        
-          <Button
+       
+
+         <IconButton 
+         style={{alignSelf: 'center', paddingBottom: 50}}
+         onPress={() => takePicture()}
+          icon={
+          <Icon
+          as={MaterialCommunityIcons}
+          name="orbit"
+          size="2xl"
+          color="white"
+          />}
+         />
+    
+
+       
+          {/* <Button
             style={styles.button}
             title="Flip Image"
             onPress={() => {
@@ -58,10 +77,10 @@ export default function CameraOpen({navigation}) {
                 );
               }}>
         
-          </Button>
-          <Button title="Take Picture" onPress={() => takePicture()}/>
+          </Button> */}
+          {/* <Button title="Take Picture" onPress={() => takePicture()}/> */}
           {/* <Button title="Pick from Gallery"  onPress={() =>{ pickImage()}}></Button> */}
-          {newImage && <Image source={{uri: newImage}} style={{flex: 1}} />}
+          {/* {newImage && <Image source={{uri: newImage}} style={{flex: 1}} />} */}
         </View>
     
     );
@@ -81,5 +100,14 @@ export default function CameraOpen({navigation}) {
     fixedRatio :{
       flex: 1,
       aspectRatio : 1
+    },
+    preview:{
+      height: winHeight,
+      width: winWidth,
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
     }
 })
