@@ -18,8 +18,8 @@ import {
   getAllItems,
   getItemById,
 } from "../Services/ItemService";
-import {addOutfit} from "../Services/OutfitService"
-import MainBar from "../Components/Navigation/MainBar"
+import { addOutfit } from "../Services/OutfitService";
+import MainBar from "../Components/Navigation/MainBar";
 
 export default function CreateLookScreen({ navigation }) {
   const { currentUser, selectedItemId, setSelectedItemId } =
@@ -33,8 +33,6 @@ export default function CreateLookScreen({ navigation }) {
   const [selected, setSelected] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  
-
   useEffect(async () => {
     const categoryData = await getAllItems(currentUserId);
     setCategory(categoryData);
@@ -43,33 +41,28 @@ export default function CreateLookScreen({ navigation }) {
   }, []);
 
   const handleOnPress = (item) => {
-selectItems({item})
+    selectItems(item);
   };
 
-
   const selectItems = (item) => {
-    if (selectedItems.includes(item)){
-      const newSelectedItems= selectedItems.filter((item) => item !== item);
+    if (selectedItems.includes(item)) {
+      const newSelectedItems = selectedItems.filter((item) => item !== item);
       setSelectedItems(newSelectedItems);
     }
     setSelectedItems([...selectedItems, item]);
-  }
-  
-  console.log(selectedItems);
+  };
 
-
+  // console.log(selectedItems);
 
   const handleSubmit = () => {
+    selectedItems.forEach((item) => {
+      // addOutfit(item);
+      let ItemId = item.id
+      item.id =0;
 
-selectedItems.forEach(item => {
-  // console.log(item);
-  addOutfit(item)
-
-})
-  
-  }
-
-
+      console.log({...item, OutFitName: "Corin Outfit", ItemId})
+    });
+  };
 
   //  check and see if item exists in arr, return bool / NOT IN USE
   // const getSelected = (item) => selectedItems.includes(item.id);
@@ -175,20 +168,18 @@ selectedItems.forEach(item => {
                 <>
                   <TouchableOpacity
                     onPress={() => {
-                      handleOnPress(item.brand)
+                      handleOnPress(item);
                     }}
                     style={styles.itemBox}
                     key={index}
                     selected={selected}
                   >
-              
-                
-                      <Image
-                        source={{ uri: item.image }}
-                        style={styles.imageContainer}
-                        alt="image"
-                      />
-                  
+                    <Image
+                      source={{ uri: item.image }}
+                      style={styles.imageContainer}
+                      alt="image"
+                    />
+
                     {selected ? <View style={styles.overlay} /> : null}
                   </TouchableOpacity>
                 </>
@@ -241,10 +232,10 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "rgba(0,0,0,0.4)",
   },
-  imageContainer:{
+  imageContainer: {
     height: "100%",
-    width: "100%"
-  }
+    width: "100%",
+  },
 });
 
 // const styles = StyleSheet.create({
