@@ -45,27 +45,43 @@ export default function CreateLookScreen({ navigation }) {
   };
 
   const selectItems = (item) => {
-    if (selectedItems.includes(item)) {
-      const newSelectedItems = selectedItems.filter((item) => item !== item);
+
+    //is there an obj with the same id? 
+    const selectedItemId =  selectedItems.some((obj) => obj.id === item.id) //will return true or false
+    
+    //if item is found with same id - handling deselecting
+    if (selectedItemId) {
+      //create new array with all items except the one selected
+      const newSelectedItems = selectedItems.filter((obj) => obj.id !== item.id );
       setSelectedItems(newSelectedItems);
     }
-    setSelectedItems([...selectedItems, item]);
+    else{
+      
+      setSelectedItems([...selectedItems, item]);
+    }
+    console.log(selectedItemId)
+
+      // if (selectedItems.includes(item)){
+    //   const newSelectedItems = selectedItems.filter((item) => item !== item );
+    //   setSelectedItems(newSelectedItems);
+    // }
+    // else{
+    //   setSelectedItems([...selectedItems, item]);
+    // }
   };
 
-  // console.log(selectedItems);
+  console.log(selectedItems);
 
   const handleSubmit = () => {
     selectedItems.forEach((item) => {
-      // addOutfit(item);
-      let ItemId = item.id
-      item.id =0;
-
-      console.log({...item, OutFitName: "Corin Outfit", ItemId})
+      let itemId = item.id
+      item.id = 0;
+      
+      addOutfit({...item, outfitName: "Corin Outfit", itemId});
+      console.log({...item, outfitName: "Corin Outfit", itemId})
     });
   };
 
-  //  check and see if item exists in arr, return bool / NOT IN USE
-  // const getSelected = (item) => selectedItems.includes(item.id);
 
   return (
     <>

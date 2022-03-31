@@ -1,3 +1,4 @@
+import {URL} from "../Components/Url"
 // const LoginAuth = async (username, password) => {
 
 //     const response = await fetch("https://virtualclosetapi.azurewebsites.net/User/Login", { 
@@ -17,7 +18,7 @@
 //   }
 const LoginAuth = async (username, password) => {
 
-    const response = await fetch("http://192.168.4.21:5172/User/Login", { 
+    const response = await fetch(`${URL}/User/Login`, { 
         method: "POST",
         headers: {
              "Content-Type" : "application/json"
@@ -49,7 +50,7 @@ const LoginAuth = async (username, password) => {
 //     return data;
 //   }
   const getUser = async (username) => {
-    const response = await fetch("http://192.168.4.21:5172/User/getCurrentUser", { 
+    const response = await fetch(`${URL}/User/getCurrentUser`, { 
         method: "Post",
         headers: {
              "Content-Type" : "application/json"
@@ -86,7 +87,7 @@ const LoginAuth = async (username, password) => {
   
   const CreateAcc = async (username, password, name) => {
 
-    const response = await fetch("http://192.168.4.21:5172/User/AddUser", { 
+    const response = await fetch(`${URL}2/User/AddUser`, { 
         method: "POST",
         headers: {
              "Content-Type" : "application/json"

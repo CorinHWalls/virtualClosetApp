@@ -1,5 +1,4 @@
-import UserContext from "../Context/UserContext";
-import { useContext } from "react";
+import {URL} from "../Components/Url"
 
 //Used on Dashboard
 // const getCategoryItems = async (category, userId) => {
@@ -20,7 +19,7 @@ import { useContext } from "react";
 
 const getCategoryItems = async (category, userId) => {
   const response = await fetch(
-    `http://192.168.4.21:5172/Item/getitemsbycategory/${category}/${userId}`,
+    `${URL}/Item/getitemsbycategory/${category}/${userId}`,
     {
       method: "Get",
       headers: {
@@ -50,7 +49,7 @@ const getCategoryItems = async (category, userId) => {
 // };
 const getAllItems = async (userId) => {
   const response = await fetch(
-    `http://192.168.4.21:5172/Item/getitemsbyuserid/${userId}`,
+    `${URL}/Item/getitemsbyuserid/${userId}`,
     {
       method: "Get",
       headers: {
@@ -78,7 +77,7 @@ const getAllItems = async (userId) => {
 // };
 const getItemById = async (id, userId) => {
   const response = await fetch(
-    `http://192.168.4.21:5172/Item/getitembyid/${id}/${userId}`,
+    `${URL}/Item/getitembyid/${id}/${userId}`,
     {
       method: "Get",
       headers: {
@@ -129,7 +128,7 @@ const updateItemById = async ({
   image,
   selected,
 }) => {
-  const response = await fetch("http://192.168.4.21:5172/Item/updateitembyid", {
+  const response = await fetch(`${URL}/Item/updateitembyid`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -200,7 +199,7 @@ const addItem = async (
   selected
 ) => {
   const response = await fetch(
-    "http://192.168.4.21:5172/Item/additem",
+    `${URL}/Item/additem`,
     {
       method: "POST",
       headers: {
@@ -240,7 +239,7 @@ const addItem = async (
 
 const getFavorites = async (userId, favorite) => {
   const response = await fetch(
-    `http://192.168.4.21:5172/Item/getfavorites/${userId}/${favorite}`,
+    `${URL}/Item/getfavorites/${userId}/${favorite}`,
     {
       method: "Get",
       headers: {

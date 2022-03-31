@@ -1,3 +1,4 @@
+import {URL} from "../Components/Url"
 // const addOutfit = async (
 //   currentUserId,
 //   itemId,
@@ -27,25 +28,43 @@
 // };
 
 const addOutfit = async (
-  currentUserId,
+  {
+  userId,
   itemId,
   outfitName,
-  outfitOccasion,
-  outfitSeason
+  brand,
+  category,
+  color,
+  favorite,
+  image,
+  season,
+  selected,
+  size,
+  }
+
 ) => {
   const response = await fetch(
-    "http://192.168.4.21:5172/Outfit/AddOutfit",
+    `${URL}/Outfit/addoutfit`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId: currentUserId,
-        ItemId: itemId,
-        OufitName: outfitName,
-        OutfitOccasion: outfitOccasion,
-        OutfitSeason: outfitSeason,
+
+        id: 0,
+        userId: userId,
+        itemId: itemId,
+        outfitName: outfitName,
+        color: color,
+        favorite: favorite,
+        image: image,
+        size: size,
+        season: season,
+        selected: selected,
+        brand: brand,
+        category: category,
+        
       }),
     }
   );
@@ -69,7 +88,7 @@ const addOutfit = async (
 // };
 const getOutfitByUserId = async (userId) => {
   const response = await fetch(
-    `http://192.168.4.21:5172/getoutfitbyuserid/${userId}`,
+    `${URL}/getoutfitbyuserid/${userId}`,
     {
       method: "Get",
       headers: {
