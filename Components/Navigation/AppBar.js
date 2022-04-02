@@ -1,6 +1,14 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Box, HStack, StatusBar, Icon, IconButton, Popover, Button } from "native-base";
+import {
+  Box,
+  HStack,
+  StatusBar,
+  Icon,
+  IconButton,
+  Popover,
+  Button,
+} from "native-base";
 import UserContext from "../../Context/UserContext";
 import React, { useContext, useEffect, useState } from "react";
 import { getItemById, updateItemById } from "../../Services/ItemService";
@@ -35,8 +43,7 @@ export default function AppBar({
   } = useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const navigation = useNavigation();
-  const [position, setPosition] = useState("auto")
-
+  const [position, setPosition] = useState("auto");
 
   // const saveChanges = async () => {
   //   await updateItemById({currentUserId,
@@ -49,20 +56,13 @@ export default function AppBar({
   //     image,
   //     favorite});
   // }
- 
+
   const favoriteToggle = () => {
     if (!favorite) {
-      
       setFavorite(true);
-      
     } else {
-    
       setFavorite(false);
-      
-      
     }
-  
-
   };
 
   const editToggle = () => {
@@ -89,57 +89,63 @@ export default function AppBar({
         maxW="100%"
       >
         <HStack alignItems="center">
-          <Text color="white" fontSize="9" fontWeight="bold">
-            {page}
-          </Text>
-         <IconButton
-         onPress={() => navigation.navigate("Dashboard")}
-         />
-        </HStack>
-        
-
-        {editStatus ? 
-        <HStack ml="0">
-
-        {favorite ? (
-            <IconButton
-            onPress={() => favoriteToggle()}
+          <IconButton
+            onPress={() => navigation.navigate("Dashboard")}
             icon={
               <Icon
-              as={MaterialCommunityIcons}
-              name="heart"
-              size="sm"
-              color="white"
+                as={MaterialCommunityIcons}
+                name="arrow-left"
+                size="md"
+                color="white"
               />
             }
-            />
-            ) : (
+          />
+
+          <Text style={styles.text}>
+            {page}
+          </Text>
+        </HStack>
+
+        {editStatus ? (
+          <HStack ml="0">
+            {favorite ? (
               <IconButton
-              onPress={() => favoriteToggle()}
-              icon={
-                <Icon
-                  as={MaterialCommunityIcons}
-                  name="heart-outline"
-                  size="sm"
-                  color="white"
+                onPress={() => favoriteToggle()}
+                icon={
+                  <Icon
+                    as={MaterialCommunityIcons}
+                    name="heart"
+                    size="sm"
+                    color="white"
                   />
                 }
-                />
-                )}
-
+              />
+            ) : (
+              <IconButton
+                onPress={() => favoriteToggle()}
+                icon={
+                  <Icon
+                    as={MaterialCommunityIcons}
+                    name="heart-outline"
+                    size="sm"
+                    color="white"
+                  />
+                }
+              />
+            )}
           </HStack>
-          : null}
+        ) : null}
         <HStack>
-        <IconButton
-              icon={
-                <Icon
+          <IconButton
+            icon={
+              <Icon
                 as={MaterialCommunityIcons}
                 name="delete"
                 size="md"
                 color="white"
-                />
-              }
               />
+            }
+          />
           {/* <Popover 
           placement={position === "auto" ? undefined : position}
           trigger={triggerProps => {
@@ -173,15 +179,15 @@ export default function AppBar({
             </Popover> */}
           {editStatus ? (
             <IconButton
-            onPress={() => editToggle()}
-            icon={
-              <Icon
-              as={MaterialCommunityIcons}
-              name="check"
-              size="md"
-              color="white"
-              />
-            }
+              onPress={() => editToggle()}
+              icon={
+                <Icon
+                  as={MaterialCommunityIcons}
+                  name="check"
+                  size="md"
+                  color="white"
+                />
+              }
             />
           ) : (
             <IconButton
@@ -196,10 +202,18 @@ export default function AppBar({
               }
             />
           )}
-        
         </HStack>
-
       </HStack>
     </>
   );
 }
+
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 20,
+    padding: 10,
+    color: 'white',
+  
+  },
+});

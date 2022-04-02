@@ -36,62 +36,80 @@ export default function CreateLookScreen({ navigation }) {
   useEffect(async () => {
     const categoryData = await getAllItems(currentUserId);
     setCategory(categoryData);
-    // selectedItems.forEach(await getItemById(selectedItems, currentUserId));
-    // const selectedData = await getItemById();
   }, []);
 
   const handleOnPress = (item) => {
     selectItems(item);
   };
 
-  const selectItems = (item) => {
+  ///Feature that controlls submission has been moved to MainBar.js
 
-    //is there an obj with the same id? 
-    const selectedItemId =  selectedItems.some((obj) => obj.id === item.id) //will return true or false
-    
+  const getSelected = (item) => {
+    return selectedItems.some((obj) => obj.id === item.id);
+  };
+
+  //This function handles items being selected to be added to outfit
+  const selectItems = (item) => {
+    //is there an obj with the same id?
+    const selectedItemId = selectedItems.some((obj) => obj.id === item.id); //will return true or false
+
     //if item is found with same id - handling deselecting
     if (selectedItemId) {
       //create new array with all items except the one selected
-      const newSelectedItems = selectedItems.filter((obj) => obj.id !== item.id );
+      const newSelectedItems = selectedItems.filter(
+        (obj) => obj.id !== item.id
+      );
       setSelectedItems(newSelectedItems);
-    }
-    else{
-      
+    } else {
       setSelectedItems([...selectedItems, item]);
     }
-    console.log(selectedItemId)
-
-      // if (selectedItems.includes(item)){
-    //   const newSelectedItems = selectedItems.filter((item) => item !== item );
-    //   setSelectedItems(newSelectedItems);
-    // }
-    // else{
-    //   setSelectedItems([...selectedItems, item]);
-    // }
+    console.log(selectedItemId);
   };
 
   console.log(selectedItems);
-
-  const handleSubmit = () => {
-    selectedItems.forEach((item) => {
-      let itemId = item.id
-      item.id = 0;
-      
-      addOutfit({...item, outfitName: "Corin Outfit", itemId});
-      console.log({...item, outfitName: "Corin Outfit", itemId})
-    });
-  };
-
 
   return (
     <>
       <SafeAreaView style={styles.container}>
         {/* Window to view selected items */}
 
-        <MainBar page="Create Outfit" />
+        <MainBar selectedItems={selectedItems} page="Create Outfit" />
 
-        <Box mt="5" borderWidth="1" w="100%" h="40%">
-          <Button onPress={handleSubmit}>Submit</Button>
+        {/* FlatList of Items selected */}
+        <Box w="100%" h="50%">
+          <Text style={{alignSelf: "center"}}>Selected Items</Text>
+
+          <View style={styles.itemContainer}>
+          <FlatList
+            // style={{flex:1}}
+            horizontal={false}
+            numColumns={2}
+            data={selectedItems}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item, index }) => {
+              return (
+                <>
+                  <TouchableOpacity
+                    onPress={() => {
+                      handleOnPress(item);
+                    }}
+                    style={styles.itemBox}
+                    key={index}
+                    selected={getSelected(item)}
+                  >
+                    <Image
+                      source={{ uri: item.image }}
+                      style={styles.imageContainer}
+                      alt="image"
+                    />
+
+                    {selected ? <View style={styles.overlay} /> : null}
+                  </TouchableOpacity>
+                </>
+              );
+            }}
+          />
+        </View>
         </Box>
         {/* Filter */}
         <ScrollView scrollEventToggle={16}>
@@ -170,7 +188,7 @@ export default function CreateLookScreen({ navigation }) {
           </View>
         </ScrollView>
 
-        {/* FlatList of Items displayed */}
+        {/* FlatList of Items to select from */}
 
         <View style={styles.itemContainer}>
           <FlatList
@@ -188,7 +206,7 @@ export default function CreateLookScreen({ navigation }) {
                     }}
                     style={styles.itemBox}
                     key={index}
-                    selected={selected}
+                    selected={getSelected(item)}
                   >
                     <Image
                       source={{ uri: item.image }}
@@ -234,12 +252,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   itemContainer: {
-    flex: 500,
-    height: 500,
-    // flexDirection: "column",
-    // flexWrap: "wrap",
+    flex: 50,
+    height: "50%",
     padding: 5,
-    // marginBottom: "23%",
     borderColor: "black",
   },
   overlay: {
@@ -252,51 +267,13 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+  selectedContainer:{
+    flex: 50,
+    height: "50%",
+    padding: 5,
+    borderColor: "black",
+  },
+
 });
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "rgb(239,218,215)",
-//     // paddingTop: 50,
-//   },
-//   itemContainer: {
-//     flex: 50,
-//     height: Dimensions.get("window").height * 2,
-//     // flexDirection: "column",
-//     // flexWrap: "wrap",
-//     padding: 5,
-//     marginBottom: "23%",
-//     borderColor: "black",
-//   },
-//   itemBox: {
-//     width: "48%",
-//     height: 150,
-//     alignItems: "center",
-//     marginHorizontal: "1%",
-//     borderWidth: 0.75,
-//     marginBottom: 5,
-//     backgroundColor: "white",
-//   },
-//   scrollSection: {
-//     margin: 10,
-//     height: 60,
-//     marginTop: 10,
-//     borderLeftWidth: 0,
-//     borderRightWidth: 0,
-//     borderWidth: 0.2,
-//     borderColor: "black",
-//     borderRadius: 5,
-//     paddingTop: 15,
-//   },
-//   actionButtonIcon: {
-//     fontSize: 20,
-//     height: 22,
-//     color: "white",
-//   },
-//   imageContainer: {
-//     height: 150,
-//     width: 150
 
-//   }
-// });
