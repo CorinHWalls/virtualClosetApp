@@ -7,7 +7,8 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
-  Alert,
+  Platform,
+  StatusBar,
   Image,
 } from "react-native";
 // import { Image } from "native-base";
@@ -49,7 +50,7 @@ function Dashboard({ navigation }) {
       {loginPending ? <AppLoader /> : null}
 
       <SafeAreaView style={styles.container}>
-        <MainBar page="Item Dashboard" />
+        <MainBar page="Item Dashboard"  />
         {/* Start of Main Container */}
 
         <ScrollView scrollEventToggle={16}>
@@ -173,6 +174,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(239,218,215)",
     height: height,
     width: width,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
   itemContainer: {
     flex: 50,
