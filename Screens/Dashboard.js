@@ -8,10 +8,9 @@ import {
   FlatList,
   TouchableOpacity,
   Alert,
-  Image
+  Image,
 } from "react-native";
 // import { Image } from "native-base";
-
 
 import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../Context/UserContext";
@@ -19,52 +18,40 @@ import AppLoader from "../Components/AppLoader";
 import { getCategoryItems, getAllItems } from "../Services/ItemService";
 import CategoryBtn from "../Components/CategoryBtn";
 import DashboardActionBtn from "../Components/DashboardActionBtn";
-import MainBar from "../Components/Navigation/MainBar"
-const {height, width} = Dimensions.get('window')
-
-
+import MainBar from "../Components/Navigation/MainBar";
+const { height, width } = Dimensions.get("window");
 
 function Dashboard({ navigation }) {
   const { currentUser, setSelectedItemId, loginPending, setLoginPending } =
     useContext(UserContext);
-  const [category, setCategory] = useState(null);
+  const [category, setCategory] = useState();
   const currentUserId = currentUser[0].id;
   const [isLoaded, setIsLoaded] = useState(false);
-
- 
-
+  const [refreshing, setRefreshing] = useState(false)
 
   useEffect(async () => {
     setLoginPending(true);
-    const allData = await getAllItems(currentUserId);
-    setCategory(allData);
-
+    setCategory(await getAllItems(currentUserId));
+  
     //handling effects
     setTimeout(() => {
       setLoginPending(false);
-      setIsLoaded(true)
+      // setIsLoaded(true);
     }, 3000);
-
-    
-  }, []);
-
+  },  []);
 
   const handleDetailClick = () => {
     navigation.navigate("ItemDetails");
   };
 
- 
-
   return (
     <>
-    
       {loginPending ? <AppLoader /> : null}
 
       <SafeAreaView style={styles.container}>
         <MainBar page="Item Dashboard" />
         {/* Start of Main Container */}
-  
-        
+
         <ScrollView scrollEventToggle={16}>
           <View style={styles.scrollSection}>
             <ScrollView
@@ -141,39 +128,38 @@ function Dashboard({ navigation }) {
           </View>
         </ScrollView>
 
-<View style={styles.itemContainer}>
-<FlatList
-  // style={{flex:1}}
-  horizontal={false}
-  numColumns={2}
-  data={category}
-  keyExtractor={(item) => item.id}
-  renderItem={({ item, index }) => {
-   
-    return (
-      <>
-      
-      <TouchableOpacity
-        onPress={() => {
-          handleDetailClick(), setSelectedItemId(item.id);
-        }}
-        style={styles.itemBox}
-      >
-     
-          
-          
-        <Image key={index} source={{uri: item.image}} style={styles.imageContainer} alt="image" /> 
-         
-          
-      </TouchableOpacity>
-      </>
-    );
-  }}
-/>
+        <View style={styles.itemContainer}>
+          <FlatList
+            horizontal={false}
+            numColumns={2}
+            data={category}
+            keyExtractor={(item) => item.id}
+            refreshing={refreshing}
+            onRefresh={ async () => setCategory(await getAllItems(currentUserId))}
+            renderItem={({ item, index }) => {
+              return (
+                <>
+                  <TouchableOpacity
+                    onPress={() => {
+                      handleDetailClick(), setSelectedItemId(item.id);
+                    }}
+                    style={styles.itemBox}
+                    
+                  >
+                    <Image
+                      key={index}
+                      source={{ uri: item.image }}
+                      style={styles.imageContainer}
+                      alt="image"
+                    />
+                  </TouchableOpacity>
+                </>
+              );
+            }}
+          />
 
-<DashboardActionBtn />
-</View>
- 
+          <DashboardActionBtn />
+        </View>
 
         {/* End of Main Container */}
       </SafeAreaView>
@@ -186,8 +172,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgb(239,218,215)",
     height: height,
-    width: width
-   
+    width: width,
   },
   itemContainer: {
     flex: 50,
@@ -225,9 +210,8 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     height: "100%",
-    width: "100%"
-    
-  }
+    width: "100%",
+  },
 });
 
 export default Dashboard;

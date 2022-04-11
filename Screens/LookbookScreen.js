@@ -7,81 +7,63 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
-  Image
+  Image,
 } from "react-native";
 import LookBookActionBtn from "../Components/LookBookActionBtn";
 import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../Context/UserContext";
-import MainBar from "../Components/Navigation/MainBar"
-const {height, width} = Dimensions.get('window')
-
-
-
+import MainBar from "../Components/Navigation/MainBar";
+import { getOutfitByUserId } from "../Services/OutfitService";
+const { height, width } = Dimensions.get("window");
 
 export default function LookbookScreen() {
-
   const { currentUser, setSelectedItemId, loginPending, setLoginPending } =
-  useContext(UserContext);
+    useContext(UserContext);
   const currentUserId = currentUser[0].id;
-  const [outfits, setOutfits] = useState()
+  const [outfits, setOutfits] = useState();
 
   useEffect(async () => {
- //Get all Outfits by userId
-    
-  
+    //Get all Outfits by userId
+    // const allData = getOutfitByUserId(currentUserId);
+    // setOutfits(allData);
   }, []);
 
-  
   return (
-   <>
-   <SafeAreaView style={styles.container}>
-     {/* Start of main container */}
+    <>
+      <SafeAreaView style={styles.container}>
+        {/* Start of main container */}
 
-     
-     <MainBar page="Outfits" />
-     <View style={styles.itemContainer}>
-          {/* <FlatList
+        <MainBar page="Outfits" />
+        <View style={styles.itemContainer}>
+        <FlatList
             // style={{flex:1}}
             horizontal={false}
-            numColumns={2}
+            numColumns={1}
             data={outfits}
             keyExtractor={(item) => item.id}
             renderItem={({ item, index }) => {
-             
               return (
                 <>
-                
-                <TouchableOpacity
-                  onPress={() => {
-                    handleDetailClick(), setSelectedItemId(item.id);
-                  }}
-                  style={styles.itemBox}
-                >
-                  <View key={index}>
+                  <TouchableOpacity
+                    style={styles.itemBox}
+                    key={index}
+                  >
+                    <Image
+                      source={{ uri: item.image }}
+                      style={styles.imageContainer}
+                      alt="image"
+                    />
 
-                    <Text>id: {item.id}</Text>
-                    <Text>UserId: {item.userId}</Text>
-                    <Text>{item.category}</Text>
-                    <Text>{item.color}</Text>
-                    <Text>Size: {item.size}</Text>
-                    <Text>{item.season}</Text>
-                    <Text>Brand: {item.brand}</Text>
-                    <Image source={{uri: item.image}} styles={styles.imageContainer} alt="image" />
-                  </View>
-                    
-                </TouchableOpacity>
+                  </TouchableOpacity>
                 </>
               );
             }}
-          /> */}
-          
-
+          />
           <LookBookActionBtn />
-         
         </View>
-   </SafeAreaView>
-   </>
-  )
+      </SafeAreaView>
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -89,7 +71,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgb(239,218,215)",
     width: width,
-    height: height
+    height: height,
   },
   itemContainer: {
     flex: 50,
@@ -127,7 +109,6 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     height: 150,
-    width: 150
-    
-  }
+    width: 150,
+  },
 });

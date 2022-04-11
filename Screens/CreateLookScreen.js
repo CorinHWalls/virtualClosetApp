@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { Input, Box, FormControl, Button } from "native-base";
+import { Input, Box, FormControl, Button, Modal } from "native-base";
 import React, { useContext, useEffect, useState } from "react";
 import CategoryBtn from "../Components/CategoryBtn";
 import UserContext from "../Context/UserContext";
@@ -21,13 +21,15 @@ import {
 import { addOutfit } from "../Services/OutfitService";
 import MainBar from "../Components/Navigation/MainBar";
 
-export default function CreateLookScreen({ navigation }) {
+export default function CreateLookScreen() {
+
   const { currentUser, selectedItemId, setSelectedItemId } =
     useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const [category, setCategory] = useState();
   const [outfitName, setOutfitName] = useState();
   const [displayData, setDisplayData] = useState({});
+  const [showModal, setShowModal] = useState(false)
 
   // Multi-Select
   const [selected, setSelected] = useState(false);
@@ -73,7 +75,7 @@ export default function CreateLookScreen({ navigation }) {
       <SafeAreaView style={styles.container}>
         {/* Window to view selected items */}
 
-        <MainBar selectedItems={selectedItems} page="Create Outfit" />
+        <MainBar selectedItems={selectedItems} page="Create Outfit" setModal={setShowModal} />
 
         {/* FlatList of Items selected */}
         <Box w="100%" h="50%">
@@ -221,6 +223,8 @@ export default function CreateLookScreen({ navigation }) {
             }}
           />
         </View>
+
+       
       </SafeAreaView>
     </>
   );

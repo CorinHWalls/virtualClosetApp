@@ -22,40 +22,11 @@ export default function AppBar({
   setEditStatus,
   favorite,
 }) {
-  const {
-    currentUser,
-    brand,
-    setBrand,
-    image,
-    setImage,
-    color,
-    setColor,
-    size,
-    setSize,
-    season,
-    setSeason,
-    category,
-    setCategory,
-    setFavorite,
-    selectedItemId,
-    selected,
-    setSelected,
-  } = useContext(UserContext);
+  const { currentUser, setFavorite } = useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const navigation = useNavigation();
   const [position, setPosition] = useState("auto");
 
-  // const saveChanges = async () => {
-  //   await updateItemById({currentUserId,
-  //     selectedItemId,
-  //     color,
-  //     size,
-  //     brand,
-  //     season,
-  //     category,
-  //     image,
-  //     favorite});
-  // }
 
   const favoriteToggle = () => {
     if (!favorite) {
@@ -101,9 +72,7 @@ export default function AppBar({
             }
           />
 
-          <Text style={styles.text}>
-            {page}
-          </Text>
+          <Text style={styles.text}>{page}</Text>
         </HStack>
 
         {editStatus ? (
@@ -208,12 +177,10 @@ export default function AppBar({
   );
 }
 
-
 const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     padding: 10,
-    color: 'white',
-  
+    color: "white",
   },
 });

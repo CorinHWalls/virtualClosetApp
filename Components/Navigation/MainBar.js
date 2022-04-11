@@ -1,14 +1,17 @@
 import { View, Text, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Box, HStack, StatusBar, Icon, IconButton, Alert } from "native-base";
+import { Box, HStack, StatusBar, Icon, IconButton, Alert, FormControl, Modal, Input, Button } from "native-base";
 import UserContext from "../../Context/UserContext";
 import React, { useContext, useEffect, useState } from "react";
 import { getItemById, updateItemById } from "../../Services/ItemService";
 import { useNavigation } from "@react-navigation/native";
 import { addOutfit } from "../../Services/OutfitService";
+import BodyText from "../../Components/BodyText";
 
 export default function MainBar({ page, selectedItems }) {
   const navigation = useNavigation();
+  const [showModal, setShowModal] = useState(false)
+  const [outfitName, setOutfitName] = useState()
 
   const handleSubmitOutfit = () => {
     selectedItems.forEach((item) => {
@@ -17,12 +20,23 @@ export default function MainBar({ page, selectedItems }) {
       } else {
         let itemId = item.id;
         item.id = 0;
-        addOutfit({ ...item, outfitName: "Corin Outfit", itemId });
-        console.log({ ...item, outfitName: "Corin Outfit", itemId });
+        addOutfit({ ...item, outfitName: outfitName, itemId });
+        console.log({ ...item, outfitName: outfitName, itemId });
         navigation.navigate("Dashboard");
       }
     });
   };
+
+  const check = () =>{
+    let results = true;
+    if(selectedItems.length == 0){
+        results = false
+    }
+
+    return results
+  }
+
+  // console.log(selectedItems.length)
 
   return (
     <>
@@ -38,6 +52,7 @@ export default function MainBar({ page, selectedItems }) {
         maxW="100%"
       >
         <HStack alignItems="flex-start">
+          {/* For Create Look Screen */}
           {selectedItems ? 
           <IconButton
                 icon={
@@ -53,24 +68,58 @@ export default function MainBar({ page, selectedItems }) {
               :  null
           
         }
-          <Text style={styles.text}>{page}</Text>
+          <BodyText>
+            {page}
+          </BodyText>
         </HStack>
         {selectedItems ? (
           <>
+          { check ? (
+
             <IconButton
-              onPress={() => handleSubmitOutfit()}
-              icon={
-                <Icon
-                  as={MaterialCommunityIcons}
-                  name="check"
-                  size="sm"
-                  color="white"
-                />
-              }
+            onPress={() => setShowModal(true)}
+            icon={
+              <Icon
+              as={MaterialCommunityIcons}
+              name="check"
+              size="sm"
+              color="white"
+              />
+            }
             />
+            ) : null
+          }
           </>
         ) : null}
       </HStack>
+
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <Modal.Content maxWidth="400px">
+          <Modal.CloseButton />
+          <Modal.Header>Enter Outfit name</Modal.Header>
+          <Modal.Body>
+            <FormControl>
+              <FormControl.Label>Outfit name</FormControl.Label>
+              <Input onChangeText={setOutfitName} />
+            </FormControl>
+
+          </Modal.Body>
+          <Modal.Footer>
+            <Button.Group space={2}>
+              <Button variant="ghost" colorScheme="blueGray" onPress={() => {
+              setShowModal(false);
+            }}>
+                Cancel
+              </Button>
+              <Button onPress={() => {
+             handleSubmitOutfit();
+            }}>
+                Create Outfit
+              </Button>
+            </Button.Group>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal>
     </>
   );
 }
