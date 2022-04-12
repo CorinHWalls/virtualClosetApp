@@ -13,6 +13,7 @@ import UserContext from "../../Context/UserContext";
 import React, { useContext, useEffect, useState } from "react";
 import { getItemById, updateItemById } from "../../Services/ItemService";
 import { useNavigation } from "@react-navigation/native";
+import DeleteModal from  "../DeleteModal";
 
 export default function AppBar({
   page,
@@ -22,7 +23,7 @@ export default function AppBar({
   setEditStatus,
   favorite,
 }) {
-  const { currentUser, setFavorite } = useContext(UserContext);
+  const { currentUser, setFavorite, modalVisible, setModalVisible} = useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const navigation = useNavigation();
   const [position, setPosition] = useState("auto");
@@ -106,6 +107,7 @@ export default function AppBar({
         ) : null}
         <HStack>
           <IconButton
+          onPress={() => {setModalVisible(true)} }
             icon={
               <Icon
                 as={MaterialCommunityIcons}
@@ -115,37 +117,8 @@ export default function AppBar({
               />
             }
           />
-          {/* <Popover 
-          placement={position === "auto" ? undefined : position}
-          trigger={triggerProps => {
-            return <IconButton
-                {...triggerProps}
-              icon={
-                <Icon
-                as={MaterialCommunityIcons}
-                name="delete"
-                size="md"
-                color="white"
-                />
-              }
-              />
-          
-          }}>
-            <Popover.Content>
-              <Popover.Arrow />
-              <Popover.CloseButton />
-              <Popover.Header>Delete Item?</Popover.Header>
-              <Popover.Body>
-                This will permanently delete the item currently selected. This action cannot be reversed.
-              </Popover.Body>
-              <Popover.Footer justifyContent="flex-end">
-                <Button.Group space={2}>
-                  <Button colorScheme="coolGray" variant="ghost">Cancel</Button>
-                  <Button colorScheme="danger" onPress>Delete</Button>
-                </Button.Group>
-              </Popover.Footer>
-            </Popover.Content>
-            </Popover> */}
+          <DeleteModal />
+        
           {editStatus ? (
             <IconButton
               onPress={() => editToggle()}
@@ -172,6 +145,7 @@ export default function AppBar({
             />
           )}
         </HStack>
+        
       </HStack>
     </>
   );

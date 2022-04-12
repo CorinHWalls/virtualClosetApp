@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { TouchableOpacity, Image, View } from "react-native";
+
 import Dashboard from "../../Screens/Dashboard";
-import AddItemScreen from "../../Screens/AddItemScreen";
+
 import LookBookScreen from "../../Screens/LookbookScreen";
 import ProfileScreen from "../../Screens/ProfileScreen";
 import FavoriteScreen from "../../Screens/FavoriteScreen";

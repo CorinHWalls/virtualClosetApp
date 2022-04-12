@@ -12,6 +12,7 @@ import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../Context/UserContext";
 import { getFavorites } from "../Services/ItemService";
 import MainBar from "../Components/Navigation/MainBar";
+const { height, width } = Dimensions.get("window");
 
 export default function FavoriteScreen({ navigation }) {
   const { currentUser, setSelectedItemId, loginPending, setLoginPending } =
@@ -19,6 +20,8 @@ export default function FavoriteScreen({ navigation }) {
 
   const [favData, setFavData] = useState();
   const currentUserId = currentUser[0].id;
+  const [refreshing, setRefreshing] = useState(false)
+
 
   useEffect(async () => {
     //Load Favorites
@@ -37,10 +40,11 @@ export default function FavoriteScreen({ navigation }) {
         <MainBar page="Favorite Items" />
         <View style={styles.itemContainer}>
           <FlatList
-            // style={{flex:1}}
             horizontal={false}
             numColumns={2}
             data={favData}
+            refreshing={refreshing}
+            onRefresh={ async () => setFavData(await getFavorites(currentUserId, true)) }
             keyExtractor={(item) => item.id}
             renderItem={({ item, index }) => {
               return (
@@ -70,12 +74,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "rgb(239, 218, 215)",
+    height: height,
+    width: width,
   },
   itemContainer: {
-    flex: 50,
-    height: Dimensions.get("window").height * 2,
-    // flexDirection: "column",
-    // flexWrap: "wrap",
+    // flex: 50,
+    // height: Dimensions.get("window").height * 2,
     padding: 5,
     marginBottom: "23%",
     borderColor: "black",

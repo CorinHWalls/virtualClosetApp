@@ -33,10 +33,14 @@ export const UserProvider = ({ children }) => {
   const [favorite, setFavorite] = useState();
   const [selected, setSelected] = useState();
 
+  const [modalVisible, setModalVisable] = useState(false);
+
 
   return (
     <UserContext.Provider
       value={{
+        modalVisible,
+        setModalVisable,
         brand,
         setBrand,
         image,

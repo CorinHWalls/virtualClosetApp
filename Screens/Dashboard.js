@@ -174,11 +174,11 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(239,218,215)",
     height: height,
     width: width,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+    // paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
   itemContainer: {
-    flex: 50,
-    height: Dimensions.get("window").height * 2,
+    flex: 40,
+    // height: Dimensions.get("window").height * 2,
     // flexDirection: "column",
     // flexWrap: "wrap",
     padding: 5,
