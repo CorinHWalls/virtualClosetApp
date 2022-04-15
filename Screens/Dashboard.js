@@ -48,9 +48,9 @@ function Dashboard({ navigation }) {
   return (
     <>
       {loginPending ? <AppLoader /> : null}
-
+      <MainBar page="Item Dashboard"  />
       <SafeAreaView style={styles.container}>
-        <MainBar page="Item Dashboard"  />
+        
         {/* Start of Main Container */}
 
         <ScrollView scrollEventToggle={16}>

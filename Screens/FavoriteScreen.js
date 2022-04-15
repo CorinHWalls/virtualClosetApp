@@ -36,8 +36,9 @@ export default function FavoriteScreen({ navigation }) {
 
   return (
     <>
+    <MainBar page="Favorite Items" />
       <SafeAreaView style={styles.container}>
-        <MainBar page="Favorite Items" />
+        
         <View style={styles.itemContainer}>
           <FlatList
             horizontal={false}
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
     padding: 5,
     marginBottom: "23%",
     borderColor: "black",
+    paddingTop: 20
   },
   itemBox: {
     width: "48%",

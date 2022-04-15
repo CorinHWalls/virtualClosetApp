@@ -24,16 +24,17 @@ export default function LookbookScreen() {
 
   useEffect(async () => {
     //Get all Outfits by userId
-    // const allData = getOutfitByUserId(currentUserId);
-    // setOutfits(allData);
+    const allData = getOutfitByUserId(currentUserId);
+    setOutfits(allData);
   }, []);
 
   return (
     <>
+    <MainBar page="Outfits" />
       <SafeAreaView style={styles.container}>
         {/* Start of main container */}
 
-        <MainBar page="Outfits" />
+        
         <View style={styles.itemContainer}>
         <FlatList
             // style={{flex:1}}

@@ -72,10 +72,11 @@ export default function CreateLookScreen() {
 
   return (
     <>
+      <MainBar selectedItems={selectedItems} page="Create Outfit" setModal={setShowModal} />
       <SafeAreaView style={styles.container}>
         {/* Window to view selected items */}
 
-        <MainBar selectedItems={selectedItems} page="Create Outfit" setModal={setShowModal} />
+        
 
         {/* FlatList of Items selected */}
         <Box w="100%" h="50%">

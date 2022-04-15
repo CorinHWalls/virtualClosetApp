@@ -55,9 +55,10 @@ export default function ProfileScreen() {
   
 
   return (
-    
+    <>
+    <MainBar page="User Profile" />
     <SafeAreaView style={styles.container}>
-      <MainBar page="User Profile" />
+      
 
       {isloaded ? 
       <>
@@ -140,6 +141,7 @@ export default function ProfileScreen() {
         </>
     :  null}
     </SafeAreaView>
+    </>
   );
 }
 
