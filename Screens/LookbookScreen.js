@@ -21,11 +21,27 @@ export default function LookbookScreen() {
     useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const [outfits, setOutfits] = useState();
+ 
+
+  //check which obj in array have equal parameter
+  const objectsAreEqual = (a, b) => a.outfitName === b.outfitName;
 
   useEffect(async () => {
     //Get all Outfits by userId
-    const allData = getOutfitByUserId(currentUserId);
-    setOutfits(allData);
+    const allData = await getOutfitByUserId(currentUserId);
+    //Handle displaying outfits
+    const result =[];
+  
+    allData.forEach(item => {
+      const outfitsInResult = result.find(resultItem => objectsAreEqual(item, resultItem));
+
+      if(!outfitsInResult)
+      {
+        result.push(item)
+      }
+  
+    })
+    setOutfits(result);
   }, []);
 
   return (
@@ -37,7 +53,7 @@ export default function LookbookScreen() {
         
         <View style={styles.itemContainer}>
         <FlatList
-            // style={{flex:1}}
+           
             horizontal={false}
             numColumns={1}
             data={outfits}
@@ -45,15 +61,16 @@ export default function LookbookScreen() {
             renderItem={({ item, index }) => {
               return (
                 <>
+                <Text>{item.outfitName}</Text>
                   <TouchableOpacity
                     style={styles.itemBox}
                     key={index}
                   >
-                    <Image
+                    {/* <Image
                       source={{ uri: item.image }}
                       style={styles.imageContainer}
                       alt="image"
-                    />
+                    /> */}
 
                   </TouchableOpacity>
                 </>
@@ -73,6 +90,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(239,218,215)",
     width: width,
     height: height,
+    paddingTop: 30
   },
   itemContainer: {
     flex: 50,
@@ -84,7 +102,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
   },
   itemBox: {
-    width: "48%",
+    width: "100%",
     height: 150,
     alignItems: "center",
     marginHorizontal: "1%",

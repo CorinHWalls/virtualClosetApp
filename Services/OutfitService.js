@@ -88,7 +88,7 @@ const addOutfit = async (
 // };
 const getOutfitByUserId = async (userId) => {
   const response = await fetch(
-    `${URL}/getoutfitbyuserid/${userId}`,
+    `${URL}/outfit/getoutfitbyuserid/${userId}`,
     {
       method: "Get",
       headers: {
@@ -97,7 +97,7 @@ const getOutfitByUserId = async (userId) => {
     }
   );
   const data = await response.json();
-  return data[0];
+  return data;
 };
 
 export { addOutfit, getOutfitByUserId };
