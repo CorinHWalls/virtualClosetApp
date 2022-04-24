@@ -13,23 +13,17 @@ import { Input, Box, FormControl, Button, Modal } from "native-base";
 import React, { useContext, useEffect, useState } from "react";
 import CategoryBtn from "../Components/CategoryBtn";
 import UserContext from "../Context/UserContext";
-import {
-  getCategoryItems,
-  getAllItems,
-  getItemById,
-} from "../Services/ItemService";
-import { addOutfit } from "../Services/OutfitService";
+import { getCategoryItems, getAllItems } from "../Services/ItemService";
+
 import MainBar from "../Components/Navigation/MainBar";
 
-export default function CreateLookScreen() {
-
-  const { currentUser, selectedItemId, setSelectedItemId } =
-    useContext(UserContext);
+export default function OutfitCreateScreen() {
+  const { currentUser } = useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const [category, setCategory] = useState();
   const [outfitName, setOutfitName] = useState();
   const [displayData, setDisplayData] = useState({});
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
 
   // Multi-Select
   const [selected, setSelected] = useState(false);
@@ -72,47 +66,49 @@ export default function CreateLookScreen() {
 
   return (
     <>
-      <MainBar selectedItems={selectedItems} page="Create Outfit" setModal={setShowModal} />
+      <MainBar
+        selectedItems={selectedItems}
+        page="Create Outfit"
+        setModal={setShowModal}
+      />
       <SafeAreaView style={styles.container}>
         {/* Window to view selected items */}
 
-        
-
         {/* FlatList of Items selected */}
         <Box w="100%" h="50%">
-          <Text style={{alignSelf: "center"}}>Selected Items</Text>
+          <Text style={{ alignSelf: "center" }}>Selected Items</Text>
 
           <View style={styles.itemContainer}>
-          <FlatList
-            // style={{flex:1}}
-            horizontal={false}
-            numColumns={2}
-            data={selectedItems}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item, index }) => {
-              return (
-                <>
-                  <TouchableOpacity
-                    onPress={() => {
-                      handleOnPress(item);
-                    }}
-                    style={styles.itemBox}
-                    key={index}
-                    selected={getSelected(item)}
-                  >
-                    <Image
-                      source={{ uri: item.image }}
-                      style={styles.imageContainer}
-                      alt="image"
-                    />
+            <FlatList
+              // style={{flex:1}}
+              horizontal={false}
+              numColumns={2}
+              data={selectedItems}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item, index }) => {
+                return (
+                  <>
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleOnPress(item);
+                      }}
+                      style={styles.itemBox}
+                      key={index}
+                      selected={getSelected(item)}
+                    >
+                      <Image
+                        source={{ uri: item.image }}
+                        style={styles.imageContainer}
+                        alt="image"
+                      />
 
-                    {selected ? <View style={styles.overlay} /> : null}
-                  </TouchableOpacity>
-                </>
-              );
-            }}
-          />
-        </View>
+                      {selected ? <View style={styles.overlay} /> : null}
+                    </TouchableOpacity>
+                  </>
+                );
+              }}
+            />
+          </View>
         </Box>
         {/* Filter */}
         <ScrollView scrollEventToggle={16}>
@@ -224,8 +220,6 @@ export default function CreateLookScreen() {
             }}
           />
         </View>
-
-       
       </SafeAreaView>
     </>
   );
@@ -255,12 +249,16 @@ const styles = StyleSheet.create({
     borderWidth: 0.75,
     marginBottom: 5,
     backgroundColor: "white",
+    borderColor: "#ececec",
+    borderRadius: 20
   },
   itemContainer: {
     flex: 50,
     height: "50%",
     padding: 5,
-    borderColor: "black",
+    borderColor: "#ececec",
+    borderRadius: 20
+    
   },
   overlay: {
     position: "absolute",
@@ -271,14 +269,13 @@ const styles = StyleSheet.create({
   imageContainer: {
     height: "100%",
     width: "100%",
+    borderRadius: 20
   },
-  selectedContainer:{
+  selectedContainer: {
     flex: 50,
     height: "50%",
     padding: 5,
-    borderColor: "black",
+    
+    
   },
-
 });
-
-

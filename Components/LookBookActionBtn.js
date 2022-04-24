@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import ActionButton from "react-native-action-button";
 import { useNavigation } from "@react-navigation/native";
 
-export default function LookBookActionBtn() {
+export default function LookBookActionBtn({onPress}) {
   const navigation = useNavigation(); //had to use navigation hook due to error
 
   return (

@@ -1,9 +1,4 @@
-import {
-  StyleSheet,
-  Dimensions,
-  SafeAreaView,
-  Pressable,
-} from "react-native";
+import { StyleSheet, Dimensions, SafeAreaView, Pressable } from "react-native";
 import React, { useContext, useState } from "react";
 
 import {
@@ -19,59 +14,56 @@ import {
 import { LoginAuth, getUser } from "../Services/LoginService";
 import UserContext from "../Context/UserContext";
 import KeyboardAvoidingWrapper from "../Components/KeyboardAvoidingWrapper";
-// import {useFonts, Caveat } from '@expo-google-fonts/Caveat'
+import Logo from "../Components/Logo";
+import Colors from "../Config/Colors";
+import AppButton from "../Components/AppButton";
+import AppLoader from "../Components/AppLoader";
 
-function LoginScreen({ navigation }) {
+export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const { currentUser, setCurrentUser } = useContext(UserContext);
   const { loginPending, setLoginPending } = useContext(UserContext);
 
-  const  [usernameError, setUsernameError ] = useState();
-  const  [passwordError, setPasswordError ] = useState();
-  const  [userfoundError, setUserFoundError] = useState();
-
-  // useFonts({
-  //   Caveat_
-  // })
- 
+  const [usernameError, setUsernameError] = useState();
+  const [passwordError, setPasswordError] = useState();
+  const [userfoundError, setUserFoundError] = useState();
 
   const handleLogin = async () => {
-
     // If username is empty proc error
     if (username != "") {
-    setUsernameError("");
+      setUsernameError("");
+    } else {
+      setUsernameError("Hey, you need to enter a Username!");
     }
-    else{
-    setUsernameError("Hey, you need to enter a Username!");
-    }
-     // If password is empty proc error
-    if(password != ""){
+    // If password is empty proc error
+    if (password != "") {
       setPasswordError("");
-    }
-     else{
-    setPasswordError("Your password should not be empty!");
+    } else {
+      setPasswordError("Your password should not be empty!");
     }
 
     //Validate username and password entered
 
-    if(username !="" && password != ""){
+    if (username != "" && password != "") {
       const user = await LoginAuth(username, password);
-      
-      //check if token has data -if token is not null 
-      if (user.token != null) {
 
+      //check if token has data -if token is not null
+      if (user.token != null) {
         //set current userdata
         setCurrentUser(await getUser(username));
         //Reset Error validation for form
-        setUserFoundError("")
+        setUserFoundError("");
         ///navigate to Dashboard
-        navigation.navigate("Dashboard");
+        setLoginPending(true)
+        setTimeout(() => {
+          navigation.navigate("Dashboard");
+          setLoginPending(false)
+        }, 3000);
       } else {
         setUserFoundError("Username and/or Password is incorrect.");
       }
-
     }
   };
 
@@ -79,103 +71,92 @@ function LoginScreen({ navigation }) {
     <>
       <NativeBaseProvider>
         {/*///////////// Container Start /////////////*/}
-        <KeyboardAvoidingWrapper>
-
-        
-        <SafeAreaView
-          style={{ flex: 1, backgroundColor: "#ffffff" }}
-          //   showsVerticalScrollIndicator={false}
-        >
+        {loginPending ? <AppLoader /> : null}
+        <SafeAreaView style={styles.container}>
           {/*///////////// Brand view ///////////// */}
-          <View
-            backgroundColor="#EFDAD7"
-            style={{ height: Dimensions.get("window").height / 1.9 }}
-          >
-            <View>
-              <Text style={styles.brandViewText}>Login</Text>
-            </View>
+
+          <View style={styles.brandView}>
+            <Logo />
           </View>
 
           {/*///////////// Bottom View /////////////*/}
-          <View style={styles.bottomView}>
-            {/* Welcome View */}
-            <View style={{ padding: 40, marginTop: 20 }}>
-              <Text style={{ color: "#4632A1", fontSize: 22 }}>Welcome</Text>
-              <Pressable
-                onPress={() => navigation.navigate("RegisterScreen")}
-                style={{ marginTop: 10 }}
-              >
-                <Text>
-                  Don't have an account?{" "}
-                  <Text style={{ color: "red", fontStyle: "italic" }}>
-                    Register Here!
-                  </Text>
+          <KeyboardAvoidingWrapper>
+            <View>
+              {/* Welcome View */}
+              <View style={{ padding: 40 }}>
+                {/*///////////// Form Inputs View /////////////*/}
+                <View style={{ marginTop: 50 }}>
+                  {/* Username */}
+                  <Box alignItems="center">
+                    <Box w="100%" maxWidth="300px">
+                      <FormControl>
+                        <Stack mx="4">
+                          <FormControl.Label>Username</FormControl.Label>
+                          <Input
+                            type="text"
+                            //   defaultValue="12345"
+                            placeholder="Enter Username"
+                            variant="filled"
+                            value={username}
+                            onChangeText={setUsername}
+                          />
+                          <Text style={{ color: "red", marginLeft: 20 }}>
+                            {usernameError}
+                          </Text>
+                        </Stack>
+                      </FormControl>
+                    </Box>
+                  </Box>
+                  {/*///////////// Password /////////////*/}
+                  <Box alignItems="center" marginTop="0">
+                    <Box w="90%" maxWidth="300px">
+                      <FormControl>
+                        <Stack mx="4">
+                          <FormControl.Label>Password</FormControl.Label>
+                          <Input
+                            type="password"
+                            //   defaultValue="12345"
+                            placeholder="Enter Password"
+                            variant="filled"
+                            value={password}
+                            onChangeText={setPassword}
+                          />
+                          <Text style={{ color: "red", marginLeft: 20 }}>
+                            {passwordError}
+                          </Text>
+                        </Stack>
+                      </FormControl>
+                    </Box>
+              {/*///////////// Login Button /////////////*/}
+              <View style={styles.buttonContainer}>
+                <AppButton
+                  title="Login"
+                  color="secondary"
+                  onPress={handleLogin}
+                />
+                <Text style={{ paddingTop: 20, color: "red", marginLeft: 20 }}>
+                  {userfoundError}
                 </Text>
-              </Pressable>
-              {/*///////////// Form Inputs View /////////////*/}
-              <View style={{ marginTop: 50 }}>
-                {/* Username */}
-                <Box alignItems="center">
-                  <Box w="90%" maxWidth="300px">
-                    <FormControl>
-                      <Stack mx="4">
-                        <FormControl.Label>Username</FormControl.Label>
-                        <Input
-                          type="text"
-                          //   defaultValue="12345"
-                          placeholder="Enter Username"
-                          variant="rounded"
-                          value={username}
-                          onChangeText={setUsername}
-                        />
-                        <Text style={{ color: "red", marginLeft: 20 }}>
-                          {usernameError}
-                        </Text>
-                      </Stack>
-                    </FormControl>
+
+
+                <Pressable
+                  onPress={() => navigation.navigate("RegisterScreen")}
+                  style={{ marginTop: 10 }}
+                >
+                  <Text>
+                    Don't have an account?{" "}
+                    <Text style={{ color: "red", fontStyle: "italic" }}>
+                      Register Here!
+                    </Text>
+                  </Text>
+                </Pressable>
+              </View>
                   </Box>
-                </Box>
-                {/*///////////// Password /////////////*/}
-                <Box alignItems="center" marginTop="2">
-                  <Box w="90%" maxWidth="300px">
-                    <FormControl>
-                      <Stack mx="4">
-                        <FormControl.Label>Password</FormControl.Label>
-                        <Input
-                          type="password"
-                          //   defaultValue="12345"
-                          placeholder="Enter Password"
-                          variant="rounded"
-                          value={password}
-                          onChangeText={setPassword}
-                        />
-                        <Text style={{ color: "red", marginLeft: 20 }}>
-                          {passwordError}
-                        </Text>
-                      </Stack>
-                    </FormControl>
-
-
-                    {/*///////////// Login Button /////////////*/}
-                  </Box>
-
-                  <Text style={{ color: "red", marginLeft: 20 }}>
-                          {userfoundError}
-                        </Text>
-                  <Button
-                    onPress={handleLogin}
-                    // marginTop="10"
-                    variant="outline"
-                    w="60%"
-                  >
-                    Login
-                  </Button>
-                </Box>
+                </View>
               </View>
             </View>
-          </View>
+          </KeyboardAvoidingWrapper>
         </SafeAreaView>
-        </KeyboardAvoidingWrapper>
         {/*///////////// Container End ///////////// */}
       </NativeBaseProvider>
     </>
@@ -183,11 +164,14 @@ function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  brandView: {
+  container: {
     flex: 1,
-    // marginTop:30,
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: Colors.primary,
+    justifyContent: 'center',
+  },
+
+  brandView: {
+    flex: 0.5,
   },
   brandViewText: {
     color: "#ffffff",
@@ -198,13 +182,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: "50%",
   },
-  bottomView: {
-    flex: 1,
-    backgroundColor: "#ffffff",
-    bottom: 40,
-    borderTopStartRadius: 40,
-    borderTopEndRadius: 40,
-  },
+  buttonContainer: {
+    width: "70%",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 30
+  }
 });
-
-export default LoginScreen;

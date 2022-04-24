@@ -5,6 +5,7 @@ import { Input, Box, FormControl, Text, Select } from "native-base";
 import { StyleSheet, Image } from "react-native";
 import { getItemById, updateItemById } from "../Services/ItemService";
 import AppBar from "../Components/Navigation/AppBar.js";
+import AppLoader from "../Components/AppLoader";
 
 export default function ItemDetailScreen() {
   const {
@@ -26,30 +27,36 @@ export default function ItemDetailScreen() {
     setFavorite,
     selected,
     setSelected,
+    loginPending,
+    setLoginPending,
   } = useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const [formData, setFormData] = useState({});
   const [disableFields, setDisableFields] = useState(true);
-  // const [color, setColor] = useState();
-  // const [size, setSize] = useState();
-  // const [brand, setBrand] = useState();
-  // const [season, setSeason] = useState();
-  // const [category, setCategory] = useState();
-  // const [image, setImage] = useState();
-  // const [favorite, setFavorite] = useState(false);
   const [editStatus, setEditStatus] = useState(false);
 
   useEffect(async () => {
-    let data = await getItemById(selectedItemId, currentUserId);
-    setBrand(data.brand);
-    setImage(data.image);
-    setColor(data.color);
-    setSize(data.size);
-    setSeason(data.season);
-    setCategory(data.category);
-    setFavorite(data.favorite);
 
-    setFormData(await getItemById(selectedItemId, currentUserId));
+
+    setTimeout( async () => {
+      let data = await getItemById(selectedItemId, currentUserId);
+      setBrand(data.brand);
+      setImage(data.image);
+      setColor(data.color);
+      setSize(data.size);
+      setSeason(data.season);
+      setCategory(data.category);
+      setFavorite(data.favorite);
+      setSelected(data.selected);
+  
+      setFormData(await getItemById(selectedItemId, currentUserId));
+      
+    }, 500);
+
+
+    setTimeout(() => {
+      setLoginPending(false)
+    }, 1500);
     disableFields;
   }, [disableFields]);
 
@@ -64,29 +71,30 @@ export default function ItemDetailScreen() {
       category,
       image,
       favorite,
+      selected,
     });
   };
 
   const handleEdit = () => {
-
-    if(disableFields){
+    if (disableFields) {
       setDisableFields(false);
+    } else {
+      setDisableFields(true);
     }
-    else{
-      setDisableFields(true)
-    }
-
   };
 
-  const handleDelete = () => {
-    console.log("item deleted")
-  }
+  // const favoriteToggle = () => {
+  //   if (favorite) {
+  //     setFavorite(true);
+  //   } else {
+  //     setFavorite(false);
+  //   }
+  //   // saveChanges();
+  // };
 
   return (
     <>
-    
-
-    
+    {loginPending ? <AppLoader /> : null}
       <AppBar
         page={"Details"}
         editStatus={editStatus}
@@ -95,7 +103,7 @@ export default function ItemDetailScreen() {
         save={saveChanges}
         favorite={favorite}
         setFavorite={setFavorite}
-        delete={handleDelete}
+       
       />
 
       {disableFields ? (
@@ -105,7 +113,31 @@ export default function ItemDetailScreen() {
           justifyContent="center"
           alignItems="center"
         >
-          
+          {/* {favorite ? (
+            <IconButton
+              onPress={() => {favoriteToggle(), saveChanges()}}
+              icon={
+                <Icon
+                  as={MaterialCommunityIcons}
+                  name="heart"
+                  size="sm"
+                  color="white"
+                />
+              }
+            />
+          ) : (
+            <IconButton
+              onPress={() => {favoriteToggle(), saveChanges();}}
+              icon={
+                <Icon
+                  as={MaterialCommunityIcons}
+                  name="heart-outline"
+                  size="sm"
+                  color="white"
+                />
+              }
+            />
+          )} */}
           {/* Picture */}
           <Box mt="5" borderWidth="1" w="50%" h="30%">
             <Image
@@ -196,6 +228,31 @@ export default function ItemDetailScreen() {
           justifyContent="center"
           alignItems="center"
         >
+          {/* {favorite ? (
+            <IconButton
+              onPress={() => {favoriteToggle(), saveChanges()}}
+              icon={
+                <Icon
+                  as={MaterialCommunityIcons}
+                  name="heart"
+                  size="sm"
+                  color="white"
+                />
+              }
+            />
+          ) : (
+            <IconButton
+              onPress={() => {favoriteToggle(), saveChanges()}}
+              icon={
+                <Icon
+                  as={MaterialCommunityIcons}
+                  name="heart-outline"
+                  size="sm"
+                  color="white"
+                />
+              }
+            />
+          )} */}
           {/* Picture */}
           <Box mt="5" borderWidth="1" w="50%" h="30%">
             <Image
@@ -308,7 +365,6 @@ export default function ItemDetailScreen() {
           </Box>
         </Box>
       )}
-      
     </>
   );
 }

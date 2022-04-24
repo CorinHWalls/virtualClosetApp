@@ -87,8 +87,8 @@ const LoginAuth = async (username, password) => {
   
   const CreateAcc = async (username, password, name) => {
 
-    const response = await fetch(`${URL}2/User/AddUser`, { 
-        method: "POST",
+    const response = await fetch(`${URL}/User/AddUser`, { 
+        method: "Post",
         headers: {
              "Content-Type" : "application/json"
         },

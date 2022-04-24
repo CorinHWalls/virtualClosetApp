@@ -11,12 +11,14 @@ import {
   Text
 } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import AppBar from "../Components/Navigation/AppBar"
+import AppButton from "../Components/AppButton"
 
 
 
 export default function AddItemScreen({ navigation }) {
 
-  const { currentUser, newImage, setNewImage } = useContext(UserContext);
+  const { currentUser, newImage, setCounter, counter } = useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const [color, setColor] = useState();
   const [size, setSize] = useState();
@@ -24,18 +26,21 @@ export default function AddItemScreen({ navigation }) {
   const [season, setSeason] = useState();
   const [category, setCategory] = useState();
   const [favorite, setFavorite] = useState(false);
+
  
 
 
   const handleSubmit = async () => {
     await addItem(currentUserId, color, size, brand, season, category, newImage, favorite )
 
+    setCounter(counter+1)
     navigation.navigate("Dashboard");
     
   }
 
   return (
     <>
+    <AppBar page="Add item" />
       <Box
         flex="1"
         bg="primary.89"
@@ -54,7 +59,7 @@ export default function AddItemScreen({ navigation }) {
           </Box>
 
         {/* Input Fields */}
-        <Box w="70%" mt="15 " borderWidth="1" alignItems="center">
+        <Box w="70%" mt="15 "  alignItems="center">
           <Box w="75%">
             <FormControl mb="2">
               <FormControl.Label
@@ -142,8 +147,8 @@ export default function AddItemScreen({ navigation }) {
                 <Select.Item label="Summer" value="Summer" />
                 <Select.Item label="Fall" value="Fall" />
               </Select>
-
-            <Button onPress={() => {handleSubmit()}} bg="primary.90">Add</Button>
+             <AppButton title="Add" color="secondary" onPress={handleSubmit} />   
+           
           </Box>
         </Box>
       </Box>
@@ -153,7 +158,8 @@ export default function AddItemScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   imageContainer:{
-    height: 175,
-    width: 175
+    height: 200,
+    width: 200,
+    marginBottom: 20
   }
 })

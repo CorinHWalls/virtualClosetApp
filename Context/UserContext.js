@@ -16,12 +16,16 @@ export const UserProvider = ({ children }) => {
   ///Purpose: To display items based on category on the Dashboard
   const [selectedItemId, setSelectedItemId] = useState(null);
 
+  const [selectedOutfitName, setSelectedOutfitName] = useState(null);
+
   //For image picker and Camera
   const [newImage, setNewImage] = useState(null);
 
   //For selecting Items for Lookbook
   const [isSelected, setIsSelected] = useState({});
   const [selecting, setSelecting] = useState(false);
+
+  const [counter, setCounter] = useState(0);
 
   //Item properties
   const[brand, setBrand] = useState();
@@ -39,6 +43,8 @@ export const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
+        selectedOutfitName, 
+        setSelectedOutfitName,
         modalVisible,
         setModalVisable,
         brand,
@@ -68,7 +74,9 @@ export const UserProvider = ({ children }) => {
         isSelected,
         setIsSelected,
         selecting, 
-        setSelecting
+        setSelecting,
+        counter,
+        setCounter
       }}
     >
       {children}

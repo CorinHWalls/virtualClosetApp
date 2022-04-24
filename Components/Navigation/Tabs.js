@@ -4,10 +4,10 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import Dashboard from "../../Screens/Dashboard";
 
-import LookBookScreen from "../../Screens/LookbookScreen";
+import LookBookScreen from "../../Screens/OufitScreen";
 import ProfileScreen from "../../Screens/ProfileScreen";
 import FavoriteScreen from "../../Screens/FavoriteScreen";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext} from "react";
 import UserContext from "../../Context/UserContext";
 
 
@@ -15,7 +15,7 @@ const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
   
-  const { currentUser, setSelectedItemId, loginPending, setLoginPending, isSelected, setIsSelected, selecting, setSelecting } =
+  const {setSelecting } =
   useContext(UserContext);
 
   return (
@@ -43,6 +43,7 @@ const Tabs = () => {
       }}
     >
       <Tab.Screen
+        style={{position: "absolute"}}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="hanger" color={color} size={size} />
@@ -54,6 +55,7 @@ const Tabs = () => {
         onPress={() => setSelecting(false)}
       />
       <Tab.Screen
+         style={{position: "absolute"}}
         options={{ tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="cards-heart" color={color} size={size} />
         ),
@@ -64,6 +66,7 @@ const Tabs = () => {
       />
      
       <Tab.Screen
+       style={{position: "absolute"}}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="wardrobe" color={color} size={size} />
@@ -74,6 +77,7 @@ const Tabs = () => {
         component={LookBookScreen}
       />
       <Tab.Screen
+         style={{position: "absolute"}}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />

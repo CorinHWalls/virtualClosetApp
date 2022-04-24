@@ -8,12 +8,12 @@ import {
   IconButton,
   Popover,
   Button,
+  AlertDialog,
 } from "native-base";
 import UserContext from "../../Context/UserContext";
-import React, { useContext, useEffect, useState } from "react";
-import { getItemById, updateItemById } from "../../Services/ItemService";
+import React, { useContext, useState, useRef } from "react";
+import { RemoveItem } from "../../Services/ItemService";
 import { useNavigation } from "@react-navigation/native";
-import DeleteModal from  "../DeleteModal";
 
 export default function AppBar({
   page,
@@ -22,18 +22,39 @@ export default function AppBar({
   editStatus,
   setEditStatus,
   favorite,
+  editIcon
 }) {
-  const { currentUser, setFavorite, modalVisible, setModalVisible} = useContext(UserContext);
+  const {
+    currentUser,
+    selectedItemId,
+    brand,
+    image,
+    color,
+    size,
+    season,
+    category,
+    setFavorite,
+    selected,
+    setCounter,
+    counter,
+    setLoginPending
+  } = useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const navigation = useNavigation();
-  const [position, setPosition] = useState("auto");
+  const [isOpen, setIsOpen] = useState(false);
 
+  const onClose = () => setIsOpen(false);
 
+  const cancelRef = useRef(null);
+
+  //Moving
   const favoriteToggle = () => {
     if (!favorite) {
       setFavorite(true);
+      setCounter(counter+1)
     } else {
       setFavorite(false);
+      setCounter(counter+1)
     }
   };
 
@@ -46,6 +67,28 @@ export default function AppBar({
       edit();
       setEditStatus(false);
     }
+  };
+
+  const handleDelete = () => {
+    RemoveItem(
+      currentUserId,
+      selectedItemId,
+      favorite,
+      color,
+      brand,
+      season,
+      category,
+      image,
+      selected,
+      size
+    );
+    setIsOpen(false);
+    setLoginPending(true)
+    setTimeout(() => {
+      setLoginPending(false)
+    }, 2000);
+    setCounter(counter+1)
+    navigation.navigate('Dashboard');
   };
   return (
     <>
@@ -107,7 +150,9 @@ export default function AppBar({
         ) : null}
         <HStack>
           <IconButton
-          onPress={() => {setModalVisible(true)} }
+            onPress={() => {
+              setIsOpen(!isOpen);
+            }}
             icon={
               <Icon
                 as={MaterialCommunityIcons}
@@ -117,8 +162,7 @@ export default function AppBar({
               />
             }
           />
-          <DeleteModal />
-        
+
           {editStatus ? (
             <IconButton
               onPress={() => editToggle()}
@@ -145,8 +189,37 @@ export default function AppBar({
             />
           )}
         </HStack>
-        
       </HStack>
+
+      <AlertDialog
+        leastDestructiveRef={cancelRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <AlertDialog.Content>
+          <AlertDialog.CloseButton />
+          <AlertDialog.Header>Delete Item</AlertDialog.Header>
+          <AlertDialog.Body>
+            This will permenantly delete this item. This action cannot be
+            undone.
+          </AlertDialog.Body>
+          <AlertDialog.Footer>
+            <Button.Group space={2}>
+              <Button
+                variant="unstyled"
+                colorScheme="coolGray"
+                onPress={onClose}
+                ref={cancelRef}
+              >
+                Cancel
+              </Button>
+              <Button colorScheme="danger" onPress={handleDelete}>
+                Delete
+              </Button>
+            </Button.Group>
+          </AlertDialog.Footer>
+        </AlertDialog.Content>
+      </AlertDialog>
     </>
   );
 }

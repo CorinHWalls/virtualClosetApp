@@ -23,7 +23,7 @@ import MainBar from "../Components/Navigation/MainBar";
 const { height, width } = Dimensions.get("window");
 
 function Dashboard({ navigation }) {
-  const { currentUser, setSelectedItemId, loginPending, setLoginPending } =
+  const { currentUser, setSelectedItemId, loginPending, setLoginPending, counter } =
     useContext(UserContext);
   const [category, setCategory] = useState();
   const currentUserId = currentUser[0].id;
@@ -32,22 +32,27 @@ function Dashboard({ navigation }) {
 
   useEffect(async () => {
     setLoginPending(true);
-    setCategory(await getAllItems(currentUserId));
+    const data = await getAllItems(currentUserId)
+    setCategory(data);
   
     //handling effects
     setTimeout(() => {
       setLoginPending(false);
       // setIsLoaded(true);
-    }, 3000);
-  },  []);
+    }, 100);
+
+    console.log(counter)
+  },  [counter]);
 
   const handleDetailClick = () => {
+    setLoginPending(true)
     navigation.navigate("ItemDetails");
   };
 
   return (
     <>
       {loginPending ? <AppLoader /> : null}
+
       <MainBar page="Item Dashboard"  />
       <SafeAreaView style={styles.container}>
         
@@ -174,13 +179,9 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(239,218,215)",
     height: height,
     width: width,
-    // paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
   itemContainer: {
     flex: 40,
-    // height: Dimensions.get("window").height * 2,
-    // flexDirection: "column",
-    // flexWrap: "wrap",
     padding: 5,
     marginBottom: "23%",
     borderColor: "black",
@@ -193,6 +194,8 @@ const styles = StyleSheet.create({
     borderWidth: 0.75,
     marginBottom: 5,
     backgroundColor: "white",
+    borderRadius: 20,
+    borderColor: "#ececec",
   },
   scrollSection: {
     margin: 10,
@@ -213,6 +216,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     height: "100%",
     width: "100%",
+    borderRadius: 20
   },
 });
 

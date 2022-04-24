@@ -2,7 +2,6 @@ import {
   StyleSheet,
   Dimensions,
   SafeAreaView,
-  Text,
   View,
   Image,
   FlatList,
@@ -15,7 +14,7 @@ import MainBar from "../Components/Navigation/MainBar";
 const { height, width } = Dimensions.get("window");
 
 export default function FavoriteScreen({ navigation }) {
-  const { currentUser, setSelectedItemId, loginPending, setLoginPending } =
+  const { currentUser, setSelectedItemId, counter, setCounter} =
     useContext(UserContext);
 
   const [favData, setFavData] = useState();
@@ -26,7 +25,7 @@ export default function FavoriteScreen({ navigation }) {
   useEffect(async () => {
     //Load Favorites
     setFavData(await getFavorites(currentUserId, true));
-  }, []);
+  }, [counter]);
 
   const handleDetailClick = () => {
     //Pass item.id to detail
@@ -94,6 +93,8 @@ const styles = StyleSheet.create({
     borderWidth: 0.75,
     marginBottom: 5,
     backgroundColor: "white",
+    borderRadius: 20,
+    borderColor: "#ececec",
   },
   scrollSection: {
     margin: 10,
@@ -114,5 +115,6 @@ const styles = StyleSheet.create({
   imageContainer: {
     height: "100%",
     width: "100%",
+    borderRadius: 20
   },
 });

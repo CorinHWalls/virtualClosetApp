@@ -2,14 +2,17 @@
 import { StyleSheet} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import WelcomeScreen from "./Screens/WelcomeScreen"
 import LoginScreen from "./Screens/LoginScreen";
 import RegisterScreen from "./Screens/RegisterScreen";
 import AddItemScreen from "./Screens/AddItemScreen";
 import ItemDetailScreen from "./Screens/ItemDetailScreen";
-import CreateLookScreen from "./Screens/CreateLookScreen";
-import LookbookScreen from "./Screens/LookbookScreen";
+import OutfitCreateScreen from "./Screens/OutfitCreateScreen";
+import OutfitDetailScreen from "./Screens/OutfitDetailScreen";
+import OutfitScreen from "./Screens/OufitScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import FavoriteScreen from "./Screens/FavoriteScreen";
+
 import Dashboard from "./Screens/Dashboard";
 import Tabs from "./Components/Navigation/Tabs";
 import CameraOpen from "./Components/CameraOpen";
@@ -60,6 +63,12 @@ export default function App() {
           }}
           >
             <Stack.Screen
+              component={WelcomeScreen}
+              name="welcome"
+              // options={{ headerShown: false }}
+              // headerTitle="Test"
+            />
+            <Stack.Screen
               component={LoginScreen}
               name="LoginScreen"
               // options={{ headerShown: false }}
@@ -83,12 +92,17 @@ export default function App() {
                options={{headerShown: false}}
             />
             <Stack.Screen
+              component={OutfitDetailScreen}
+              name="OutfitDetails"
+               options={{headerShown: false}}
+            />
+            <Stack.Screen
               component={AddItemScreen}
               name="AddItem"
                options={{headerShown: false}}
             />
             <Stack.Screen
-              component={LookbookScreen}
+              component={OutfitScreen}
               name="Lookbook"
                options={{headerShown: false}}
             />
@@ -120,10 +134,11 @@ export default function App() {
                options={{headerShown: false}}
             />
             <Stack.Screen
-              component={CreateLookScreen}
+              component={OutfitCreateScreen}
               name="Select"
                options={{headerShown: false}}
             />
+        
           </Stack.Navigator>
         </NavigationContainer>
        

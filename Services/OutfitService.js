@@ -100,4 +100,18 @@ const getOutfitByUserId = async (userId) => {
   return data;
 };
 
-export { addOutfit, getOutfitByUserId };
+const getOutfitByName = async (userId, outfitName) => {
+  const response = await fetch(
+    `${URL}/outfit/getoutfits/${userId}/${outfitName}`,
+    {
+      method: "Get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+  return data;
+};
+
+export { addOutfit, getOutfitByUserId, getOutfitByName };

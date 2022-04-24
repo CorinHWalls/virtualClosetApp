@@ -7,8 +7,11 @@ import {
   Alert,
 } from "react-native";
 import { CreateAcc } from "../Services/LoginService";
-import Confirmation from "../Components/Confirmation"
+import Confirmation from "../Components/Confirmation";
 import KeyboardAvoidingWrapper from "../Components/KeyboardAvoidingWrapper";
+import Colors from "../Config/Colors";
+import Logo from "../Components/Logo";
+import AppButton from "../Components/AppButton";
 
 import {
   NativeBaseProvider,
@@ -20,14 +23,14 @@ import {
   Button,
   View,
 } from "native-base";
-const {height, width} = Dimensions.get('window')
+const { height, width } = Dimensions.get("window");
 
 function RegisterScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
+
   //Error checking
   const [usernameError, setUsernameError] = useState();
   const [passwordError, setPasswordError] = useState();
@@ -58,31 +61,28 @@ function RegisterScreen({ navigation }) {
       setConfirmpasswordError("Enter your password to confirm");
     }
 
-    if (password != confirmPassword && password != "" ) {
+    if (password != confirmPassword && password != "") {
       setConfirmpasswordError("Passwords do not match");
-    }
-    else{
-
+    } else {
       //Will create user and returns true or false depending if username exists
       //If username exists returns false because it did not create the account
       const didCreate = await CreateAcc(username, password, name);
-  
-    //Check to see if password matches confirmed password
-  
-    if (didCreate != true) {
-      setUsernameError("Username already exists");
-    } else {
-      //Confirm account was created
-      //Navigate to loginscreen
 
-      setUserCreated(true);
-      setUsernameError("");
-      setTimeout(() => {
-        setUserCreated(false);
-        navigation.navigate("LoginScreen");
-      }, 2000);
-      
-    }
+      //Check to see if password matches confirmed password
+
+      if (didCreate != true) {
+        setUsernameError("Username already exists");
+      } else {
+        //Confirm account was created
+        //Navigate to loginscreen
+
+        setUserCreated(true);
+        setUsernameError("");
+        setTimeout(() => {
+          setUserCreated(false);
+          navigation.navigate("LoginScreen");
+        }, 2000);
+      }
     }
   };
 
@@ -90,137 +90,130 @@ function RegisterScreen({ navigation }) {
     <>
       <NativeBaseProvider>
         {/*///////////// Container Start /////////////*/}
-        <KeyboardAvoidingWrapper>
 
-        
-        <SafeAreaView
-          style={{ flex: 1, backgroundColor: "#ffffff" }}
-          //   showsVerticalScrollIndicator={false}
-        >
-          {/*///////////// Brand view ///////////// */}
-          <View
-            backgroundColor="#EFDAD7"
-            style={{ height: Dimensions.get("window").height / 4 }}
-          >
-            {/* <View>
-              <Text style={styles.brandViewText}>Register</Text>
-            </View> */}
+        <SafeAreaView style={styles.container}>
+          <View style={styles.brandView}>
+            <Logo />
           </View>
 
           {/*///////////// Bottom View /////////////*/}
-          <View style={styles.bottomView}>
-            {/* Create Account View */}
-            <View style={{ padding: 40, marginTop: 20 }}>
-              <Text style={{ color: "#4632A1", fontSize: 22 }}>
-                Create an Account
-              </Text>
-              <Pressable
-                onPress={() => navigation.navigate("LoginScreen")}
-                style={{ marginTop: 10 }}
-              >
-                <Text>
-                  Already have an account?
-                  <Text style={{ color: "red", fontStyle: "italic" }}>
-                    {" "}
-                    Login
-                  </Text>
-                </Text>
-              </Pressable>
+          <KeyboardAvoidingWrapper>
+            <View>
+              {/* Create Account View */}
+              <View style={{ padding: 40, marginTop: 20 }}>
+                {/* <Text style={{ color: "#4632A1", fontSize: 22 }}>
+                  Create an Account
+                </Text> */}
 
-              {/*///////////// Form Inputs View /////////////*/}
-              <View style={{ marginTop: 40 }}>
-                {/* Username */}
-                <Box alignItems="center">
-                  <Box w="90%" maxWidth="300px">
-                    <FormControl isRequired>
-                      <Stack mx="4">
-                        <FormControl.Label>Username</FormControl.Label>
-                        <Input
-                          type="text"
-                          //   defaultValue="12345"
-                          placeholder="username"
-                          variant="rounded"
-                          onChangeText={setUsername}
-                        />
-                        <Text style={{ color: "red", marginLeft: 20 }}>
-                          {usernameError}
-                        </Text>
-                      </Stack>
-                    </FormControl>
+                {/*///////////// Form Inputs View /////////////*/}
+                <View style={{ marginTop: 40 }}>
+                  {/* Username */}
+                  <Box alignItems="center">
+                    <Box w="90%" maxWidth="300px">
+                      <FormControl isRequired>
+                        <Stack mx="4">
+                          <FormControl.Label>Username</FormControl.Label>
+                          <Input
+                            type="text"
+                            //   defaultValue="12345"
+                            placeholder="username"
+                            variant="filled"
+                            onChangeText={setUsername}
+                          />
+                          <Text style={{ color: "red", marginLeft: 20 }}>
+                            {usernameError}
+                          </Text>
+                        </Stack>
+                      </FormControl>
+                    </Box>
                   </Box>
-                </Box>
-                {/* ///////////// FirstName /////////// */}
-                <Box alignItems="center">
-                  <Box w="90%" maxWidth="300px">
-                    <FormControl isRequired>
-                      <Stack mx="4">
-                        <FormControl.Label>First Name</FormControl.Label>
-                        <Input
-                          type="text"
-                          placeholder="Display Name"
-                          variant="rounded"
-                          onChangeText={setName}
-                        />
-                        <Text style={{ color: "red", marginLeft: 20 }}>
-                          {firstnameError}
-                        </Text>
-                      </Stack>
-                    </FormControl>
+                  {/* ///////////// FirstName /////////// */}
+                  <Box alignItems="center">
+                    <Box w="90%" maxWidth="300px">
+                      <FormControl isRequired>
+                        <Stack mx="4">
+                          <FormControl.Label>First Name</FormControl.Label>
+                          <Input
+                            type="text"
+                            placeholder="Display Name"
+                            variant="filled"
+                            onChangeText={setName}
+                          />
+                          <Text style={{ color: "red", marginLeft: 20 }}>
+                            {firstnameError}
+                          </Text>
+                        </Stack>
+                      </FormControl>
+                    </Box>
                   </Box>
-                </Box>
-                {/*///////////// Password /////////////*/}
-                <Box alignItems="center" marginTop="5">
-                  <Box w="90%" maxWidth="300px">
-                    <FormControl isRequired>
-                      <Stack mx="4">
-                        <FormControl.Label>Password</FormControl.Label>
-                        <Input
-                          type="password"
-                          //   defaultValue="12345"
-                          placeholder="Password"
-                          variant="rounded"
-                          onChangeText={setPassword}
-                        />
-                        <Text style={{ color: "red", marginLeft: 20 }}>
-                          {passwordError}
-                        </Text>
-                      </Stack>
-                    </FormControl>
-                  </Box>
-                  {/* ///////////// Confirm Password /////////////*/}
-                  <Box w="90%" maxWidth="300px" marginTop="5">
-                    <FormControl isRequired>
-                      <Stack mx="4">
-                        <FormControl.Label>Confirm Password</FormControl.Label>
-                        <Input
-                          type="password"
-                          //   defaultValue="12345"
-                          placeholder="Confirm Password"
-                          variant="rounded"
-                          onChangeText={setConfirmPassword}
-                        />
-                        <Text style={{ color: "red", marginLeft: 20 }}>
-                          {confirmpasswordError}
-                        </Text>
-                      </Stack>
-                    </FormControl>
-                  </Box>
+                  {/*///////////// Password /////////////*/}
+                  <Box alignItems="center" marginTop="1">
+                    <Box w="90%" maxWidth="300px">
+                      <FormControl isRequired>
+                        <Stack mx="4">
+                          <FormControl.Label>Password</FormControl.Label>
+                          <Input
+                            type="password"
+                            //   defaultValue="12345"
+                            placeholder="Password"
+                            variant="filled"
+                            onChangeText={setPassword}
+                          />
+                          <Text style={{ color: "red", marginLeft: 20 }}>
+                            {passwordError}
+                          </Text>
+                        </Stack>
+                      </FormControl>
+                    </Box>
+                    {/* ///////////// Confirm Password /////////////*/}
+                    <Box w="90%" maxWidth="300px" marginTop="1">
+                      <FormControl isRequired>
+                        <Stack mx="4">
+                          <FormControl.Label>
+                            Confirm Password
+                          </FormControl.Label>
+                          <Input
+                            type="password"
+                            //   defaultValue="12345"
+                            placeholder="Confirm Password"
+                            variant="filled"
+                            onChangeText={setConfirmPassword}
+                          />
+                          <Text style={{ color: "red", marginLeft: 20 }}>
+                            {confirmpasswordError}
+                          </Text>
+                        </Stack>
+                      </FormControl>
 
-                  {/*///////////// Login Button /////////////*/}
-                  <Button
-                    marginTop="5"
-                    variant="outline"
-                    w="60%"
-                    onPress={handleSubmit}
-                  >
-                    Submit
-                  </Button>
-                </Box>
+                    </Box>
+                      {/*///////////// Submit Button /////////////*/}
+                      <View style={styles.buttonContainer}>
+                      <AppButton
+                        title="Create Account"
+                        color="secondary"
+                        onPress={handleSubmit}
+                      />
+
+                    <Pressable
+                      onPress={() => navigation.navigate("LoginScreen")}
+                      style={{ marginTop: 20 }}
+                    >
+                      <Text>
+                        Already have an account?
+                        <Text style={{ color: "red", fontStyle: "italic" }}>
+                          {" "}
+                          Login
+                        </Text>
+                      </Text>
+                    </Pressable>
+                      </View>
+
+                  </Box>
+                </View>
               </View>
             </View>
-          </View>
+          </KeyboardAvoidingWrapper>
         </SafeAreaView>
-        </KeyboardAvoidingWrapper>
         {/*///////////// Container End ///////////// */}
       </NativeBaseProvider>
       {userCreated ? <Confirmation /> : null}
@@ -229,34 +222,23 @@ function RegisterScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container:{
-     flex: 1,
-     backgroundColor: "rgb(239,218,215)",
-     height: height,
-     
+  container: {
+    flex: 1,
+    backgroundColor: Colors.primary,
   },
   brandView: {
-    flex: 1,
-    // marginTop:30,
+    flex: 0.3,
+
     justifyContent: "center",
     alignItems: "center",
   },
-  brandViewText: {
-    color: "#ffffff",
-    fontSize: 22,
-    //   fontWeight: "bold",
-    textTransform: "uppercase",
-    //   justifyContent: "center",
-    alignSelf: "center",
-    marginTop: "50%",
-  },
-  bottomView: {
-    flex: 1,
-    backgroundColor: "#ffffff",
-    bottom: 40,
-    borderTopStartRadius: 40,
-    borderTopEndRadius: 40,
-  },
+  buttonContainer:{
+    width: "70%",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 30
+  }
+ 
 });
 
 export default RegisterScreen;

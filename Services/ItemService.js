@@ -251,6 +251,34 @@ const getFavorites = async (userId, favorite) => {
   return data;
 };
 
+const RemoveItem = async (currentUserId, selectedItemId, favorite, color, brand, season, category, image, selected, size ) => {
+  const response = await fetch(
+    `${URL}/Item/remove`,
+    {
+      method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: selectedItemId,
+              userId: currentUserId,
+              Color: color,
+              Size: size,
+              Brand: brand,
+              Season: season,
+              Category: category,
+              Image: image,
+              Favorite: favorite,
+              Selected: selected,
+            }),
+    }
+  );
+  const data = await response.json();
+  return data;
+};
+
+
+
 export {
   getCategoryItems,
   getAllItems,
@@ -258,4 +286,6 @@ export {
   updateItemById,
   addItem,
   getFavorites,
+  RemoveItem
+  
 };
