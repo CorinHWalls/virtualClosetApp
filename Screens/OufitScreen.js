@@ -17,7 +17,7 @@ import OutfitNotice from "../Components/OutfitNotice";
 const { height, width } = Dimensions.get("window");
 
 export default function OutfitScreen({navigation}) {
-  const { currentUser, setSelectedOutfitName } = useContext(UserContext);
+  const { currentUser, setSelectedOutfitName, counter } = useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const [outfits, setOutfits] = useState();
   const [refreshing, setRefreshing] = useState(false)
@@ -41,7 +41,7 @@ export default function OutfitScreen({navigation}) {
       }
     });
     setOutfits(result);
-  }, []);
+  }, [counter]);
 
   const handleClick = (outfitName) => {
     setSelectedOutfitName(outfitName)

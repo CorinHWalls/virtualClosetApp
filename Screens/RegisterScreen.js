@@ -93,7 +93,7 @@ function RegisterScreen({ navigation }) {
 
         <SafeAreaView style={styles.container}>
           <View style={styles.brandView}>
-            <Logo />
+            <Logo url={require("../assets/logo.png")} />
           </View>
 
           {/*///////////// Bottom View /////////////*/}

@@ -58,8 +58,8 @@ export default function LoginScreen({ navigation }) {
         ///navigate to Dashboard
         setLoginPending(true)
         setTimeout(() => {
-          navigation.navigate("Dashboard");
           setLoginPending(false)
+          navigation.navigate("Dashboard");
         }, 3000);
       } else {
         setUserFoundError("Username and/or Password is incorrect.");
@@ -76,7 +76,7 @@ export default function LoginScreen({ navigation }) {
           {/*///////////// Brand view ///////////// */}
 
           <View style={styles.brandView}>
-            <Logo />
+            <Logo style={{height: 120, width: 220}} url={require("../assets/logo.png")}/>
           </View>
 
           {/*///////////// Bottom View /////////////*/}

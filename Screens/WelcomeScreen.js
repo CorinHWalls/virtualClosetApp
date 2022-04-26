@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, ImageBackground, Image } from "react-native";
 import React from "react";
 
 import AppButton from "../Components/AppButton";
+import Logo from "../Components/Logo";
 
 
 export default function WelcomeScreen({ navigation }) {
@@ -10,13 +11,15 @@ export default function WelcomeScreen({ navigation }) {
       style={styles.background}
       source={require("../assets/welcome1.jpg")}
     >
-      <View style={styles.imageContainer}>
+      {/* <View style={styles.imageContainer}>
         <Image style={styles.image} source={require("../assets/logo.png")} />
         <View style={styles.titleContainer}>
 
         <Text>Your Closet In Your Pocket</Text>
         </View>
-      </View>
+      </View> */}
+      <Logo url={require("../assets/logo.png")} />
+
 {/* 
       <View style={styles.titleContainer}>
       </View> */}

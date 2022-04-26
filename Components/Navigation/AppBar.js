@@ -22,11 +22,14 @@ export default function AppBar({
   editStatus,
   setEditStatus,
   favorite,
-  editIcon
+  editIcon,
+  deleteItem,
+  deleteOutfit
 }) {
   const {
     currentUser,
     selectedItemId,
+    setSelectedItemId,
     brand,
     image,
     color,
@@ -51,10 +54,10 @@ export default function AppBar({
   const favoriteToggle = () => {
     if (!favorite) {
       setFavorite(true);
-      setCounter(counter+1)
+      
     } else {
       setFavorite(false);
-      setCounter(counter+1)
+      
     }
   };
 
@@ -62,12 +65,20 @@ export default function AppBar({
     if (!editStatus) {
       edit();
       setEditStatus(true);
+      setCounter(counter+1)
     } else {
       save();
+      setCounter(counter+1)
       edit();
       setEditStatus(false);
     }
   };
+
+  const handleBackBtn = () => {
+    setSelectedItemId(null)
+    setCounter(counter+1)
+    navigation.navigate("Dashboard")
+  }
 
   const handleDelete = () => {
     RemoveItem(
@@ -88,6 +99,7 @@ export default function AppBar({
       setLoginPending(false)
     }, 2000);
     setCounter(counter+1)
+    setSelectedItemId(null)
     navigation.navigate('Dashboard');
   };
   return (
@@ -105,7 +117,7 @@ export default function AppBar({
       >
         <HStack alignItems="center">
           <IconButton
-            onPress={() => navigation.navigate("Dashboard")}
+            onPress={() => handleBackBtn()}
             icon={
               <Icon
                 as={MaterialCommunityIcons}
@@ -162,6 +174,7 @@ export default function AppBar({
               />
             }
           />
+         
 
           {editStatus ? (
             <IconButton
@@ -188,6 +201,7 @@ export default function AppBar({
               }
             />
           )}
+      
         </HStack>
       </HStack>
 

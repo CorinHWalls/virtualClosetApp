@@ -25,7 +25,10 @@ export const UserProvider = ({ children }) => {
   const [isSelected, setIsSelected] = useState({});
   const [selecting, setSelecting] = useState(false);
 
+  //Using on Dashboard & fav to refresh via useEffect
   const [counter, setCounter] = useState(0);
+
+  const [isPressed, setIsPressed] = useState(false)
 
   //Item properties
   const[brand, setBrand] = useState();
@@ -43,6 +46,8 @@ export const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
+        isPressed,
+        setIsPressed,
         selectedOutfitName, 
         setSelectedOutfitName,
         modalVisible,

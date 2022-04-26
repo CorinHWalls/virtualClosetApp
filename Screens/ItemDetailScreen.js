@@ -29,6 +29,8 @@ export default function ItemDetailScreen() {
     setSelected,
     loginPending,
     setLoginPending,
+    counter,
+    setCounter
   } = useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const [formData, setFormData] = useState({});
@@ -83,6 +85,29 @@ export default function ItemDetailScreen() {
     }
   };
 
+  const handleDelete = () => {
+    RemoveItem(
+      currentUserId,
+      selectedItemId,
+      favorite,
+      color,
+      brand,
+      season,
+      category,
+      image,
+      selected,
+      size
+    );
+    // setIsOpen(false);
+    setLoginPending(true)
+    setTimeout(() => {
+      setLoginPending(false)
+    }, 2000);
+    setCounter(counter+1)
+    setSelectedItemId(null)
+    navigation.navigate('Dashboard');
+  };
+
   // const favoriteToggle = () => {
   //   if (favorite) {
   //     setFavorite(true);
@@ -103,6 +128,7 @@ export default function ItemDetailScreen() {
         save={saveChanges}
         favorite={favorite}
         setFavorite={setFavorite}
+        deleteItem={handleDelete}
        
       />
 

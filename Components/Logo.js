@@ -1,10 +1,10 @@
 import { View, Image, StyleSheet } from 'react-native'
 import React from 'react'
 
-export default function Logo() {
+export default function Logo({url}) {
   return (
     <View style={styles.imageContainer}>
-        <Image style={styles.image} source={require("../assets/logo.png")} />
+        <Image style={styles.image} source={url} />
        
       </View>
   )
@@ -13,8 +13,8 @@ export default function Logo() {
 const styles = StyleSheet.create({
  
     image: {
-      width: 220,
-      height: 120,
+      width: 275,
+      height: 160,
     },
     imageContainer: {
       width: "100%",

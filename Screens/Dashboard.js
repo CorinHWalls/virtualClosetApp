@@ -23,25 +23,17 @@ import MainBar from "../Components/Navigation/MainBar";
 const { height, width } = Dimensions.get("window");
 
 function Dashboard({ navigation }) {
-  const { currentUser, setSelectedItemId, loginPending, setLoginPending, counter } =
+  const { currentUser, setSelectedItemId, loginPending, setLoginPending, counter, setIsPressed } =
     useContext(UserContext);
   const [category, setCategory] = useState();
   const currentUserId = currentUser[0].id;
-  const [isLoaded, setIsLoaded] = useState(false);
   const [refreshing, setRefreshing] = useState(false)
 
   useEffect(async () => {
-    setLoginPending(true);
+    
     const data = await getAllItems(currentUserId)
     setCategory(data);
   
-    //handling effects
-    setTimeout(() => {
-      setLoginPending(false);
-      // setIsLoaded(true);
-    }, 100);
-
-    console.log(counter)
   },  [counter]);
 
   const handleDetailClick = () => {
@@ -75,6 +67,7 @@ function Dashboard({ navigation }) {
                   setCategory(await getCategoryItems("Tops", currentUserId));
                 }}
                 label={"Tops"}
+                style={styles.button}
               />
               <CategoryBtn
                 onPress={async () => {
@@ -218,6 +211,9 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: 20
   },
+  button: {
+    
+  }
 });
 
 export default Dashboard;

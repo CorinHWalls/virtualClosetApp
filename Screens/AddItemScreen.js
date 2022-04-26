@@ -12,7 +12,9 @@ import {
 } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppBar from "../Components/Navigation/AppBar"
+import MainBar from "../Components/Navigation/MainBar"
 import AppButton from "../Components/AppButton"
+
 
 
 
@@ -40,7 +42,7 @@ export default function AddItemScreen({ navigation }) {
 
   return (
     <>
-    <AppBar page="Add item" />
+    <MainBar page="Add Item" />
       <Box
         flex="1"
         bg="primary.89"
@@ -82,7 +84,7 @@ export default function AddItemScreen({ navigation }) {
                     fontWeight: "bold",
                   },
                 }}
-              >
+              > 
                 Color
               </FormControl.Label>
               <Input onChangeText={setColor} variant="filled" />

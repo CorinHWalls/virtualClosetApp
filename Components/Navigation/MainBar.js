@@ -9,6 +9,8 @@ import { addOutfit } from "../../Services/OutfitService";
 import BodyText from "../../Components/BodyText";
 
 export default function MainBar({ page, selectedItems }) {
+
+  const { counter, setCounter } = useContext(UserContext);
   const navigation = useNavigation();
   const [showModal, setShowModal] = useState(false)
   const [outfitName, setOutfitName] = useState()
@@ -21,7 +23,7 @@ export default function MainBar({ page, selectedItems }) {
         let itemId = item.id;
         item.id = 0;
         addOutfit({ ...item, outfitName: outfitName, itemId });
-        console.log({ ...item, outfitName: outfitName, itemId });
+        setCounter(counter+1)
         navigation.navigate("Dashboard");
       }
     });
@@ -36,8 +38,6 @@ export default function MainBar({ page, selectedItems }) {
     return results
   }
 
-  // console.log(selectedItems.length)
-
   return (
     <>
       <StatusBar bg="#9AD0EC" barStyle="light-content" />
@@ -51,7 +51,7 @@ export default function MainBar({ page, selectedItems }) {
         w="100%"
         maxW="100%"
       >
-        <HStack alignItems="flex-start">
+        <HStack alignItems="center">
           {/* For Create Look Screen */}
           {selectedItems ? 
           <IconButton

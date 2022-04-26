@@ -76,7 +76,7 @@ const Tabs = () => {
         name="Lookbook"
         component={LookBookScreen}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
          style={{position: "absolute"}}
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -86,7 +86,7 @@ const Tabs = () => {
         }}
         name="Profile"
         component={ProfileScreen}
-      />
+      /> */}
       {/* <Tab.Screen name="Settings" component={Dashboard} /> */}
     </Tab.Navigator>
       </>

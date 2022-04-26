@@ -18,7 +18,7 @@ import { getCategoryItems, getAllItems } from "../Services/ItemService";
 import MainBar from "../Components/Navigation/MainBar";
 
 export default function OutfitCreateScreen() {
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, setCounter } = useContext(UserContext);
   const currentUserId = currentUser[0].id;
   const [category, setCategory] = useState();
   const [outfitName, setOutfitName] = useState();
@@ -59,10 +59,10 @@ export default function OutfitCreateScreen() {
     } else {
       setSelectedItems([...selectedItems, item]);
     }
-    console.log(selectedItemId);
+   
   };
 
-  console.log(selectedItems);
+
 
   return (
     <>

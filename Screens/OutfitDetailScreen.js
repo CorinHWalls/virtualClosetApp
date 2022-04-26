@@ -29,7 +29,7 @@ export default function OutfitDetailScreen({ navigation }) {
   const handleDetailClick = () => {
     //Pass item.id to detail
     //navigate user to detail screen
-    navigation.navigate("ItemDetails");
+    // navigation.navigate("ItemDetails");
   };
 
   return (

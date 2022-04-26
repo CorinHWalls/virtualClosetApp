@@ -114,4 +114,6 @@ const getOutfitByName = async (userId, outfitName) => {
   return data;
 };
 
+
+
 export { addOutfit, getOutfitByUserId, getOutfitByName };
